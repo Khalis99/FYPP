@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-brand-50: #eef5fd;
+    --color-brand-100: #d6e7fa;
+    --color-brand-200: #aecff4;
+    --color-brand-500: #2a7de1;
+    --color-brand-600: #1b6ac9;
+    --color-brand-700: #1656a3;
+    --color-brand-800: #134781;
+}
+
+/*
+ * Reusable UI classes. Keeping these in one place means every page
+ * uses the same button, input and table styles.
+ */
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-[15px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+    /* Use together with .btn, e.g. class="btn btn-primary" */
+    .btn-primary {
+        @apply bg-brand-600 text-white hover:bg-brand-700;
+    }
+    .btn-secondary {
+        @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50;
+    }
+    .btn-danger {
+        @apply bg-red-600 text-white hover:bg-red-700;
+    }
+    .btn-sm {
+        @apply px-3 py-1.5 text-sm;
+    }
+    .link {
+        @apply font-semibold text-brand-600 hover:text-brand-800 hover:underline;
+    }
+    .link-danger {
+        @apply font-semibold text-red-600 hover:text-red-800 hover:underline;
+    }
+
+    .form-label {
+        @apply mb-1.5 block text-[15px] font-semibold text-slate-800;
+    }
+    .form-input {
+        @apply block w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 shadow-xs placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none;
+    }
+    .form-input-error {
+        @apply border-red-500 focus:border-red-500 focus:ring-red-100;
+    }
+    .form-hint {
+        @apply mt-1 text-sm text-slate-500;
+    }
+    .form-error {
+        @apply mt-1 text-sm font-medium text-red-600;
+    }
+
+    .card {
+        @apply rounded-lg border border-slate-200 bg-white shadow-sm;
+    }
+
+    .data-table {
+        @apply w-full min-w-[640px] text-left text-[15px];
+    }
+    .data-table th {
+        @apply border-b border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700;
+    }
+    .data-table td {
+        @apply border-b border-slate-100 px-4 py-3 align-top text-slate-800;
+    }
+    .data-table tbody tr:hover {
+        @apply bg-slate-50/70;
+    }
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+dialog::backdrop {
+    background: rgb(15 23 42 / 0.45);
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
