@@ -28,7 +28,11 @@ class RphDocumentFactory extends Factory
             'school_class_id' => SchoolClass::factory(),
             'title' => 'RPH: '.ucfirst($topic),
             'topic' => ucfirst($topic),
+            'theme' => 'Sains Hayat',
+            'unit' => '5',
             'lesson_date' => now()->addDays(fake()->numberBetween(0, 10))->toDateString(),
+            'week' => fake()->numberBetween(1, 40),
+            'start_time' => '08:00',
             'duration_minutes' => 60,
             'student_count' => 30,
             'content' => [

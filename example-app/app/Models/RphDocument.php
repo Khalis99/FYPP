@@ -8,17 +8,32 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * A saved Rancangan Pengajaran Harian (daily lesson plan).
  *
  * The `content` column holds the structured sections described in RphContent::SECTIONS.
  */
-#[Fillable(['teacher_id', 'subject_id', 'school_class_id', 'title', 'topic', 'lesson_date', 'duration_minutes', 'student_count', 'content', 'inputs', 'is_ai_generated', 'ai_provider'])]
+#[Fillable(['teacher_id', 'subject_id', 'school_class_id', 'title', 'topic', 'theme', 'unit', 'lesson_date', 'week', 'start_time', 'duration_minutes', 'student_count', 'content', 'inputs', 'is_ai_generated', 'ai_provider'])]
 class RphDocument extends Model
 {
     /** @use HasFactory<RphDocumentFactory> */
     use HasFactory;
+
+    /**
+     * Lesson time for the "Masa" box, e.g. "8:00 AM – 9:00 AM", or null when no start time is set.
+     */
+    public function timeRange(): ?string
+    {
+        if (! $this->start_time) {
+            return null;
+        }
+
+        $start = Carbon::parse($this->start_time);
+
+        return $start->format('g:i A').' – '.$start->copy()->addMinutes($this->duration_minutes)->format('g:i A');
+    }
 
     /**
      * @return array<string, string>

@@ -4,7 +4,9 @@ namespace App\Http\Requests\Teacher;
 
 use App\Models\SchoolClass;
 use App\Models\Subject;
+use App\Services\Rph\RphGenerationService;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Validation\Rule;
 
 class GenerateRphRequest extends TeacherFormRequest
 {
@@ -16,10 +18,15 @@ class GenerateRphRequest extends TeacherFormRequest
     public function rules(): array
     {
         return [
+            'language' => ['required', Rule::in(array_keys(RphGenerationService::LANGUAGES))],
             'subject_id' => ['required', 'integer', 'exists:subjects,id'],
             'school_class_id' => ['required', 'integer', 'exists:school_classes,id'],
             'topic' => ['required', 'string', 'max:255'],
+            'theme' => ['nullable', 'string', 'max:255'],
+            'unit' => ['nullable', 'string', 'max:255'],
             'lesson_date' => ['required', 'date'],
+            'week' => ['nullable', 'integer', 'min:1', 'max:53'],
+            'start_time' => ['nullable', 'date_format:H:i'],
             'duration_minutes' => ['required', 'integer', 'min:10', 'max:300'],
             'student_count' => ['nullable', 'integer', 'min:1', 'max:100'],
             'learning_objectives' => ['required', 'string', 'max:2000'],
@@ -38,6 +45,7 @@ class GenerateRphRequest extends TeacherFormRequest
     {
         return parent::attributes() + [
             'lesson_date' => 'date',
+            'start_time' => 'start time',
             'duration_minutes' => 'duration',
             'student_count' => 'number of students',
         ];
@@ -45,16 +53,20 @@ class GenerateRphRequest extends TeacherFormRequest
 
     /**
      * The validated input with IDs replaced by readable names, as sent to the AI.
+     * Header-only fields (week, start time) are not needed by the AI.
      *
-     * @return array{subject: string, class: string, topic: string, lesson_date: string, duration_minutes: int, student_count: int|null, learning_objectives: string, learning_standards: string|null, teaching_aids: string|null, previous_knowledge: string|null, teaching_method: string|null, additional_instructions: string|null}
+     * @return array<string, string|int|null>
      */
     public function forAi(): array
     {
         $data = $this->validated();
 
         return [
+            'language' => RphGenerationService::LANGUAGES[$data['language']],
             'subject' => Subject::findOrFail($data['subject_id'])->name,
             'class' => SchoolClass::findOrFail($data['school_class_id'])->name,
+            'theme' => $data['theme'] ?? null,
+            'unit' => $data['unit'] ?? null,
             'topic' => $data['topic'],
             'lesson_date' => $data['lesson_date'],
             'duration_minutes' => (int) $data['duration_minutes'],

@@ -9,21 +9,21 @@ namespace App\Services\Rph;
 class RphContent
 {
     /**
-     * Section key => [label, is_list].
+     * Section key => [label, is_list, KPM heading used on the printed RPH].
      *
-     * @var array<string, array{0: string, 1: bool}>
+     * @var array<string, array{0: string, 1: bool, 2: string}>
      */
     public const SECTIONS = [
-        'learning_objectives' => ['Learning Objectives', true],
-        'learning_standards' => ['Learning Standards', true],
-        'previous_knowledge' => ['Previous Knowledge', false],
-        'teaching_aids' => ['Teaching Aids', true],
-        'teaching_activities' => ['Teaching Activities', true],
-        'teacher_activities' => ['Teacher Activities', true],
-        'student_activities' => ['Student Activities', true],
-        'assessment' => ['Assessment', false],
-        'closure' => ['Closure', false],
-        'reflection' => ['Reflection', false],
+        'learning_objectives' => ['Learning Objectives', true, 'Objektif Pembelajaran'],
+        'learning_standards' => ['Learning Standards', true, 'Standard Kandungan / Standard Pembelajaran'],
+        'previous_knowledge' => ['Previous Knowledge', false, 'Pengetahuan Sedia Ada'],
+        'teaching_aids' => ['Teaching Aids', true, 'Bahan Bantu Mengajar (BBM)'],
+        'teaching_activities' => ['Teaching Activities', true, 'Aktiviti Pengajaran dan Pembelajaran'],
+        'teacher_activities' => ['Teacher Activities', true, 'Aktiviti Guru'],
+        'student_activities' => ['Student Activities', true, 'Aktiviti Murid'],
+        'assessment' => ['Assessment', false, 'Penilaian / Pentaksiran'],
+        'closure' => ['Closure', false, 'Penutup'],
+        'reflection' => ['Reflection', false, 'Refleksi'],
     ];
 
     /**

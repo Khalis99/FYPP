@@ -15,12 +15,9 @@
 
             <x-card title="1. Lesson Details">
                 <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    <x-form.select name="subject_id" label="Subject" :options="$subjectOptions" :value="$inputs['subject_id'] ?? null" placeholder="Choose a subject" required />
-                    <x-form.select name="school_class_id" label="Class" :options="$classOptions" :value="$inputs['school_class_id'] ?? null" placeholder="Choose a class" required />
-                    <x-form.input name="topic" label="Topic" :value="$inputs['topic'] ?? null" placeholder="e.g. Photosynthesis" required />
-                    <x-form.input name="lesson_date" type="date" label="Date" :value="$inputs['lesson_date'] ?? now()->toDateString()" required />
-                    <x-form.input name="duration_minutes" type="number" label="Duration (minutes)" :value="$inputs['duration_minutes'] ?? 60" min="10" max="300" required />
-                    <x-form.input name="student_count" type="number" label="Number of students" :value="$inputs['student_count'] ?? null" min="1" max="100" />
+                    <x-form.select name="language" label="RPH language" :options="$languageOptions" :value="$inputs['language'] ?? 'ms'" required
+                                   hint="The language of the generated content." />
+                    @include('teacher.rph._header-fields', ['values' => $inputs])
                 </div>
             </x-card>
 

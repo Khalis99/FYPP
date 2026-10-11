@@ -100,7 +100,11 @@ class RphController extends Controller
             'subject_id' => $inputs['subject_id'],
             'school_class_id' => $inputs['school_class_id'],
             'topic' => $inputs['topic'],
+            'theme' => $inputs['theme'] ?? null,
+            'unit' => $inputs['unit'] ?? null,
             'lesson_date' => $inputs['lesson_date'],
+            'week' => $inputs['week'] ?? null,
+            'start_time' => $inputs['start_time'] ?? null,
             'duration_minutes' => $inputs['duration_minutes'],
             'student_count' => $inputs['student_count'] ?? null,
             'content' => $draft['content'],
@@ -189,7 +193,7 @@ class RphController extends Controller
     }
 
     /**
-     * @return array{subjectOptions: array<int, string>, classOptions: array<int, string>, sections: array<string, array{0: string, 1: bool}>}
+     * @return array{subjectOptions: array<int, string>, classOptions: array<int, string>, sections: array<string, array{0: string, 1: bool, 2: string}>, languageOptions: array<string, string>}
      */
     private function formOptions(Teacher $teacher): array
     {
@@ -197,6 +201,7 @@ class RphController extends Controller
             'subjectOptions' => $teacher->subjectsTaught()->pluck('name', 'id')->all(),
             'classOptions' => $teacher->classesTaught()->pluck('name', 'id')->all(),
             'sections' => RphContent::SECTIONS,
+            'languageOptions' => RphGenerationService::LANGUAGES,
         ];
     }
 }

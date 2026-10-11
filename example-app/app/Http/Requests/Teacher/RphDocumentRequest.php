@@ -19,7 +19,11 @@ class RphDocumentRequest extends TeacherFormRequest
             'subject_id' => ['required', 'integer', 'exists:subjects,id'],
             'school_class_id' => ['required', 'integer', 'exists:school_classes,id'],
             'topic' => ['required', 'string', 'max:255'],
+            'theme' => ['nullable', 'string', 'max:255'],
+            'unit' => ['nullable', 'string', 'max:255'],
             'lesson_date' => ['required', 'date'],
+            'week' => ['nullable', 'integer', 'min:1', 'max:53'],
+            'start_time' => ['nullable', 'date_format:H:i'],
             'duration_minutes' => ['required', 'integer', 'min:10', 'max:300'],
             'student_count' => ['nullable', 'integer', 'min:1', 'max:100'],
             'content' => ['required', 'array'],
@@ -40,6 +44,7 @@ class RphDocumentRequest extends TeacherFormRequest
     {
         $attributes = parent::attributes() + [
             'lesson_date' => 'date',
+            'start_time' => 'start time',
             'duration_minutes' => 'duration',
             'student_count' => 'number of students',
         ];

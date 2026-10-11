@@ -21,6 +21,7 @@ beforeEach(function () {
 function rphInput(array $overrides = []): array
 {
     return array_merge([
+        'language' => 'ms',
         'subject_id' => test()->subject->id,
         'school_class_id' => test()->schoolClass->id,
         'topic' => 'Photosynthesis',
@@ -195,7 +196,7 @@ test('a teacher can view, print and download an RPH', function () {
 
     $this->actingAs($this->teacher->user);
 
-    $this->get(route('teacher.rph.show', $document))->assertOk()->assertSee('Rancangan Pengajaran Harian');
+    $this->get(route('teacher.rph.show', $document))->assertOk()->assertSee('RANCANGAN PENGAJARAN HARIAN');
     $this->get(route('teacher.rph.print', $document))->assertOk()->assertSee($this->teacher->user->name)->assertSee('Print / Save as PDF');
     $this->get(route('teacher.rph.download', $document))
         ->assertOk()
@@ -215,4 +216,67 @@ test('My RPH can be searched and filtered', function () {
     $this->get(route('teacher.rph.index', ['subject_id' => $this->subject->id]))
         ->assertSee('RPH Photosynthesis')
         ->assertDontSee('RPH Fractions');
+});
+
+test('the demo generator writes the draft in the chosen language', function (string $language, string $expected) {
+    $this->actingAs($this->teacher->user)
+        ->post(route('teacher.rph.generate'), rphInput(['language' => $language]))
+        ->assertRedirect(route('teacher.rph.draft'));
+
+    expect(session('rph_draft.content.teaching_activities.0'))->toStartWith($expected);
+})->with([
+    'Bahasa Melayu' => ['ms', 'Set induksi'],
+    'English' => ['en', 'Set induction'],
+]);
+
+test('the RPH language must be Bahasa Melayu or English', function () {
+    $this->actingAs($this->teacher->user)
+        ->post(route('teacher.rph.generate'), rphInput(['language' => 'fr']))
+        ->assertSessionHasErrors('language');
+});
+
+test('the AI prompt asks for SPI 3/1999 elements and the chosen language', function () {
+    config(['ai.provider' => 'openai', 'ai.api_key' => 'k', 'ai.model' => 'm', 'ai.api_url' => 'https://llm.example.test/v1']);
+    Http::fake(['*' => Http::response(['choices' => [['message' => ['content' => '{"learning_objectives":["x"]}']]]])]);
+
+    $this->actingAs($this->teacher->user)->post(route('teacher.rph.generate'), rphInput(['theme' => 'Sains Hayat', 'week' => 41]));
+
+    Http::assertSent(fn (Request $request) => str_contains($request['messages'][0]['content'], 'Surat Pekeliling Ikhtisas Bil. 3/1999')
+        && str_contains($request['messages'][1]['content'], '"language": "Bahasa Melayu"')
+        && str_contains($request['messages'][1]['content'], '"theme": "Sains Hayat"'));
+});
+
+test('header fields from the generator carry over to the draft and saved RPH', function () {
+    $this->actingAs($this->teacher->user)
+        ->post(route('teacher.rph.generate'), rphInput(['theme' => 'Sains Hayat', 'unit' => '5', 'week' => 41, 'start_time' => '08:40']));
+
+    $this->get(route('teacher.rph.draft'))->assertSee('Sains Hayat')->assertSee('08:40');
+
+    $this->post(route('teacher.rph.store'), rphDocumentPayload(['theme' => 'Sains Hayat', 'unit' => '5', 'week' => 41, 'start_time' => '08:40']));
+
+    $document = RphDocument::sole();
+    expect($document->theme)->toBe('Sains Hayat')
+        ->and($document->week)->toBe(41)
+        ->and($document->timeRange())->toBe('8:40 AM – 9:40 AM');
+});
+
+test('the printed RPH follows the KPM template layout', function () {
+    $document = RphDocument::factory()->for($this->teacher)->create([
+        'subject_id' => $this->subject->id,
+        'school_class_id' => $this->schoolClass->id,
+        'lesson_date' => '2026-10-12',
+        'week' => 41,
+        'student_count' => 30,
+        'theme' => 'Sains Hayat',
+        'content' => ['learning_objectives' => ['Memberi contoh tumbuhan.'], 'reflection' => ''],
+    ]);
+
+    $this->actingAs($this->teacher->user)
+        ->get(route('teacher.rph.print', $document))
+        ->assertOk()
+        ->assertSeeInOrder(['MATA PELAJARAN', 'MINGGU', 'MASA', 'TARIKH / HARI', 'UNIT', 'KELAS', 'TEMA', 'BIL. MURID', 'TAJUK'])
+        ->assertSee('12 Oktober 2026 / Isnin')
+        ->assertSeeInOrder(['OBJEKTIF PEMBELAJARAN', 'Pada akhir pengajaran dan pembelajaran murid dapat:', 'Memberi contoh tumbuhan.'])
+        ->assertSee('AKTIVITI PENGAJARAN DAN PEMBELAJARAN')
+        ->assertSee('_____/30 murid dapat mencapai objektif pembelajaran yang ditetapkan.');
 });

@@ -34,13 +34,25 @@ class RphGenerationService
           "reflection": ""
         }
 
-        "teaching_activities" lists the lesson stages in order (for example set induction, development, closure), each with its duration in minutes so the total matches the lesson duration. Leave "reflection" as an empty string; the teacher writes it after the lesson. Write in the same language the teacher used.
+        Follow the RPH requirements of Surat Pekeliling Ikhtisas Bil. 3/1999: the plan must state the learning objectives, how they will be achieved (the activities), and how the teacher will judge the extent to which they were achieved (assessment and reflection). Write each learning objective so it completes the sentence "Pada akhir pengajaran dan pembelajaran murid dapat:" (or "By the end of the lesson, students will be able to:" in English), using a measurable verb and without repeating that opening phrase. Only use the learning standard codes the teacher gave; if none were given, describe the standard without inventing a code.
+
+        "teaching_activities" lists the lesson stages in order (for example set induction, development, closure), each with its duration in minutes so the total matches the lesson duration. Leave "reflection" as an empty string; the teacher writes it after the lesson. Write all content in the language named in the "language" field.
         PROMPT;
+
+    /**
+     * Output language codes accepted by the generator.
+     *
+     * @var array<string, string>
+     */
+    public const LANGUAGES = [
+        'ms' => 'Bahasa Melayu',
+        'en' => 'English',
+    ];
 
     public function __construct(private LlmClient $client) {}
 
     /**
-     * @param  array{subject: string, class: string, topic: string, lesson_date: string, duration_minutes: int, student_count?: int|null, learning_objectives?: string|null, learning_standards?: string|null, teaching_aids?: string|null, previous_knowledge?: string|null, teaching_method?: string|null, additional_instructions?: string|null}  $input
+     * @param  array{language?: string, subject: string, class: string, theme?: string|null, unit?: string|null, topic: string, lesson_date: string, duration_minutes: int, student_count?: int|null, learning_objectives?: string|null, learning_standards?: string|null, teaching_aids?: string|null, previous_knowledge?: string|null, teaching_method?: string|null, additional_instructions?: string|null}  $input
      * @return array<string, string|list<string>>
      *
      * @throws AiGenerationException
