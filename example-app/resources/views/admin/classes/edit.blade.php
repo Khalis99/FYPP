@@ -1,5 +1,5 @@
 <x-layouts.app title="Edit Class">
-    <x-page-header :title="'Edit '.$schoolClass->name" :back="route('admin.classes.show', $schoolClass)" />
+    <x-page-header :title="__('Edit :name', ['name' => $schoolClass->name])" :back="route('admin.classes.show', $schoolClass)" />
 
     <x-card class="max-w-3xl">
         <form method="POST" action="{{ route('admin.classes.update', $schoolClass) }}" class="space-y-6">

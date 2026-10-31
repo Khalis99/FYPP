@@ -21,14 +21,14 @@ class SubjectController extends Controller
     {
         Subject::create($request->validated());
 
-        return back()->with('success', 'Subject added.');
+        return back()->with('success', __('Subject added.'));
     }
 
     public function update(SubjectRequest $request, Subject $subject): RedirectResponse
     {
         $subject->update($request->validated());
 
-        return back()->with('success', 'Subject updated.');
+        return back()->with('success', __('Subject updated.'));
     }
 
     /**
@@ -38,11 +38,11 @@ class SubjectController extends Controller
     public function destroy(Subject $subject): RedirectResponse
     {
         if ($subject->teachingLoads()->exists()) {
-            return back()->with('error', "\"{$subject->name}\" is still assigned to classes. Remove those assignments first.");
+            return back()->with('error', __('":subject" is still assigned to classes. Remove those assignments first.', ['subject' => $subject->name]));
         }
 
         $subject->delete();
 
-        return back()->with('success', 'Subject deleted.');
+        return back()->with('success', __('Subject deleted.'));
     }
 }

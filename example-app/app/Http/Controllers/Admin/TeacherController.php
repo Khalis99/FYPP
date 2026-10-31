@@ -54,7 +54,7 @@ class TeacherController extends Controller
             return $user->teacher()->create($request->safe()->only(['teacher_code', 'department']));
         });
 
-        return redirect()->route('admin.teachers.show', $teacher)->with('success', 'Teacher account created. You can now assign classes from the Classes page.');
+        return redirect()->route('admin.teachers.show', $teacher)->with('success', __('Teacher account created. You can now assign classes from the Classes page.'));
     }
 
     public function show(Teacher $teacher): View
@@ -83,6 +83,6 @@ class TeacherController extends Controller
             $teacher->update($request->safe()->only(['teacher_code', 'department']));
         });
 
-        return redirect()->route('admin.teachers.show', $teacher)->with('success', 'Teacher details updated.');
+        return redirect()->route('admin.teachers.show', $teacher)->with('success', __('Teacher details updated.'));
     }
 }

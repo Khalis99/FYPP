@@ -24,7 +24,7 @@ class SubmissionController extends Controller
 
         $assignment->submissions()->create($data);
 
-        return back()->with('success', 'Submission recorded.');
+        return back()->with('success', __('Submission recorded.'));
     }
 
     public function download(AssignmentSubmission $submission): StreamedResponse
@@ -45,6 +45,6 @@ class SubmissionController extends Controller
 
         $submission->delete();
 
-        return back()->with('success', 'Submission removed.');
+        return back()->with('success', __('Submission removed.'));
     }
 }

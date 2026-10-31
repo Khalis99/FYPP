@@ -30,7 +30,7 @@
                         <td class="break-all">{{ $user->email }}</td>
                         <td><x-badge :color="$user->isAdmin() ? 'purple' : 'blue'">{{ $user->role->label() }}</x-badge></td>
                         <td><x-active-badge :active="$user->is_active" /></td>
-                        <td class="whitespace-nowrap">{{ $user->created_at->format('j M Y') }}</td>
+                        <td class="whitespace-nowrap">{{ $user->created_at->translatedFormat('j M Y') }}</td>
                         <td class="text-right whitespace-nowrap">
                             <div class="inline-flex gap-3">
                                 <a href="{{ route('admin.users.edit', $user) }}" class="link">Edit</a>

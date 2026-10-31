@@ -21,7 +21,7 @@
 
     <x-card :padding="false">
         @if ($assignments->isEmpty())
-            <x-empty-state icon="assignments" title="No assignments found" message="{{ array_filter($filters) ? 'Try changing your search or filters.' : 'Create your first assignment for one of your classes.' }}" />
+            <x-empty-state icon="assignments" title="No assignments found" message="{{ array_filter($filters) ? __('Try changing your search or filters.') : __('Create your first assignment for one of your classes.') }}" />
         @else
             <x-table>
                 <thead>
@@ -33,7 +33,7 @@
                         <tr>
                             <td><a href="{{ route('teacher.assignments.show', $assignment) }}" class="link">{{ $assignment->title }}</a></td>
                             <td>{{ $assignment->schoolClass->name }}<span class="block text-sm text-slate-500">{{ $assignment->subject->name }}</span></td>
-                            <td class="whitespace-nowrap">{{ $assignment->due_at->format('j M Y, g:i A') }}</td>
+                            <td class="whitespace-nowrap">{{ $assignment->due_at->translatedFormat('j M Y, g:i A') }}</td>
                             <td>
                                 @if ($assignment->isActive())
                                     <x-badge color="green">Active</x-badge>

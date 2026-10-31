@@ -13,6 +13,6 @@
         <x-form.textarea name="instructions" label="Instructions for students" :value="$assignment->instructions" rows="4" hint="For example: which pages to complete and how to hand in the work." />
     </div>
     <div class="sm:col-span-2">
-        <x-form.file name="attachment" :label="$assignment->attachment_path ? 'Replace attachment (optional)' : 'Attachment (optional)'" :current="$assignment->attachment_name" />
+        <x-form.file name="attachment" :label="$assignment->attachment_path ? __('Replace attachment (optional)') : __('Attachment (optional)')" :current="$assignment->attachment_name" />
     </div>
 </div>

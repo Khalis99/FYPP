@@ -22,7 +22,7 @@
 
     <x-card :padding="false">
         @if ($materials->isEmpty())
-            <x-empty-state icon="materials" title="No materials found" message="{{ array_filter($filters) ? 'Try changing your search or filters.' : 'Upload your first teaching material to get started.' }}" />
+            <x-empty-state icon="materials" title="No materials found" message="{{ array_filter($filters) ? __('Try changing your search or filters.') : __('Upload your first teaching material to get started.') }}" />
         @else
             <x-table>
                 <thead>
@@ -36,15 +36,15 @@
                                 @if ($material->topic)<span class="block text-sm text-slate-500">{{ $material->topic }}</span>@endif
                             </td>
                             <td>{{ $material->subject->name }}</td>
-                            <td>{{ $material->schoolClass?->name ?? 'All classes' }}</td>
+                            <td>{{ $material->schoolClass?->name ?? __('All classes') }}</td>
                             <td><x-badge>{{ $material->type->label() }}</x-badge></td>
-                            <td class="whitespace-nowrap">{{ $material->created_at->format('j M Y') }}</td>
+                            <td class="whitespace-nowrap">{{ $material->created_at->translatedFormat('j M Y') }}</td>
                             <td class="text-right whitespace-nowrap">
                                 <div class="inline-flex gap-3">
                                     <a href="{{ route('teacher.materials.show', $material) }}" class="link">View</a>
                                     <a href="{{ route('teacher.materials.download', $material) }}" class="link">Download</a>
                                     <a href="{{ route('teacher.materials.edit', $material) }}" class="link">Edit</a>
-                                    <x-delete-button :action="route('teacher.materials.destroy', $material)" :message="'Delete \''.$material->title.'\'? The file will be removed permanently.'" />
+                                    <x-delete-button :action="route('teacher.materials.destroy', $material)" :message="__('Delete \':title\'? The file will be removed permanently.', ['title' => $material->title])" />
                                 </div>
                             </td>
                         </tr>

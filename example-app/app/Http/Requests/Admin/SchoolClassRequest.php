@@ -43,8 +43,8 @@ class SchoolClassRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => 'A class with this name already exists for the selected academic year.',
-            'academic_year.regex' => 'The academic year must be a 4-digit year, for example 2026.',
+            'name.unique' => __('A class with this name already exists for the selected academic year.'),
+            'academic_year.regex' => __('The academic year must be a 4-digit year, for example 2026.'),
         ];
     }
 
@@ -53,6 +53,6 @@ class SchoolClassRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return ['form_level' => 'form', 'subject_id' => 'subject', 'teacher_id' => 'teacher'];
+        return ['form_level' => __('form'), 'subject_id' => __('subject'), 'teacher_id' => __('teacher')];
     }
 }

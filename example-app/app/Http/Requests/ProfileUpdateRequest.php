@@ -38,9 +38,9 @@ class ProfileUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'phone.regex' => 'The phone number may only contain digits, spaces, + and -.',
-            'photo.max' => 'The profile photo must be smaller than 2 MB.',
-            'photo.mimes' => 'The profile photo must be a JPG or PNG image.',
+            'phone.regex' => __('The phone number may only contain digits, spaces, + and -.'),
+            'photo.max' => __('The profile photo must be smaller than 2 MB.'),
+            'photo.mimes' => __('The profile photo must be a JPG or PNG image.'),
         ];
     }
 }

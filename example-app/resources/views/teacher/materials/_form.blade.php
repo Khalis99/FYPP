@@ -11,6 +11,6 @@
         <x-form.textarea name="description" label="Description" :value="$material->description" rows="3" />
     </div>
     <div class="sm:col-span-2">
-        <x-form.file name="file" :label="$material->exists ? 'Replace file (optional)' : 'File'" :required="! $material->exists" :current="$material->file_name" />
+        <x-form.file name="file" :label="$material->exists ? __('Replace file (optional)') : __('File')" :required="! $material->exists" :current="$material->file_name" />
     </div>
 </div>

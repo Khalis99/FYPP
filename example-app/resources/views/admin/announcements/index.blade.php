@@ -25,7 +25,7 @@
                         <td><a href="{{ route('admin.announcements.show', $announcement) }}" class="link">{{ $announcement->title }}</a></td>
                         <td>{{ $announcement->audience->label() }}</td>
                         <td><x-badge :color="$announcement->isPublished() ? 'green' : 'slate'">{{ $announcement->status->label() }}</x-badge></td>
-                        <td class="whitespace-nowrap">{{ ($announcement->published_at ?? $announcement->created_at)->format('j M Y') }}</td>
+                        <td class="whitespace-nowrap">{{ ($announcement->published_at ?? $announcement->created_at)->translatedFormat('j M Y') }}</td>
                         <td>{{ $announcement->readers_count }}</td>
                         <td class="text-right whitespace-nowrap">
                             <div class="inline-flex gap-3">

@@ -41,8 +41,8 @@ class UserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'phone.regex' => 'The phone number may only contain digits, spaces, + and -.',
-            'email.unique' => 'Another account already uses this email address.',
+            'phone.regex' => __('The phone number may only contain digits, spaces, + and -.'),
+            'email.unique' => __('Another account already uses this email address.'),
         ];
     }
 

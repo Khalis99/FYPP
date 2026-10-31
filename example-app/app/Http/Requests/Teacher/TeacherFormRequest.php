@@ -66,10 +66,10 @@ abstract class TeacherFormRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'file.max' => 'The file is too large. The maximum size is '.(config('schoolhub.uploads.max_kb') / 1024).' MB.',
-            'file.mimes' => 'This file type is not allowed. Please upload a PDF, Word, PowerPoint, Excel, JPG or PNG file.',
-            'attachment.max' => 'The file is too large. The maximum size is '.(config('schoolhub.uploads.max_kb') / 1024).' MB.',
-            'attachment.mimes' => 'This file type is not allowed. Please upload a PDF, Word, PowerPoint, Excel, JPG or PNG file.',
+            'file.max' => __('The file is too large. The maximum size is :size MB.', ['size' => config('schoolhub.uploads.max_kb') / 1024]),
+            'file.mimes' => __('This file type is not allowed. Please upload a PDF, Word, PowerPoint, Excel, JPG or PNG file.'),
+            'attachment.max' => __('The file is too large. The maximum size is :size MB.', ['size' => config('schoolhub.uploads.max_kb') / 1024]),
+            'attachment.mimes' => __('This file type is not allowed. Please upload a PDF, Word, PowerPoint, Excel, JPG or PNG file.'),
         ];
     }
 
@@ -79,8 +79,8 @@ abstract class TeacherFormRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'subject_id' => 'subject',
-            'school_class_id' => 'class',
+            'subject_id' => __('subject'),
+            'school_class_id' => __('class'),
         ];
     }
 }

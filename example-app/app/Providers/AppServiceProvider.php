@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Services\Ai\DemoLlmClient;
 use App\Services\Ai\LlmClient;
 use App\Services\Ai\OpenAiCompatibleClient;
+use App\Support\BladeTranslator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -35,5 +37,8 @@ class AppServiceProvider extends ServiceProvider
         Password::defaults(fn () => Password::min(8)->letters()->numbers());
 
         Paginator::defaultView('components.pagination');
+
+        // Static English text in views becomes translatable (see BladeTranslator).
+        Blade::prepareStringsForCompilationUsing(BladeTranslator::apply(...));
     }
 }

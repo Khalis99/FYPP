@@ -22,7 +22,7 @@
 
     <x-card :padding="false">
         @if ($documents->isEmpty())
-            <x-empty-state icon="document" title="No RPH found" message="{{ array_filter($filters) ? 'Try changing your search or filters.' : 'Use the RPH Generator to prepare your first lesson plan.' }}">
+            <x-empty-state icon="document" title="No RPH found" message="{{ array_filter($filters) ? __('Try changing your search or filters.') : __('Use the RPH Generator to prepare your first lesson plan.') }}">
                 @unless (array_filter($filters))
                     <a href="{{ route('teacher.rph.create') }}" class="btn btn-primary"><x-icon name="sparkles" /> Open RPH Generator</a>
                 @endunless
@@ -39,9 +39,9 @@
                             <td>{{ $document->subject?->name }}</td>
                             <td>{{ $document->schoolClass?->name }}</td>
                             <td>{{ $document->topic }}</td>
-                            <td class="whitespace-nowrap">{{ $document->lesson_date->format('j M Y') }}</td>
-                            <td class="whitespace-nowrap">{{ $document->created_at->format('j M Y') }}</td>
-                            <td class="whitespace-nowrap">{{ $document->updated_at->format('j M Y') }}</td>
+                            <td class="whitespace-nowrap">{{ $document->lesson_date->translatedFormat('j M Y') }}</td>
+                            <td class="whitespace-nowrap">{{ $document->created_at->translatedFormat('j M Y') }}</td>
+                            <td class="whitespace-nowrap">{{ $document->updated_at->translatedFormat('j M Y') }}</td>
                             <td class="text-right whitespace-nowrap">
                                 <div class="inline-flex gap-3">
                                     <a href="{{ route('teacher.rph.show', $document) }}" class="link">View</a>

@@ -1,3 +1,4 @@
+{{-- i18n:off --}}
 {{-- Plain CSS so the same styles work on screen, in print and inside Microsoft Word.
      Colours follow the KPM RPH template: blue-grey label cells inside one bordered table. --}}
 <style>

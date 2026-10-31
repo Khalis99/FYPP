@@ -1,5 +1,5 @@
 <x-layouts.app :title="$schoolClass->name">
-    <x-page-header :title="'Class '.$schoolClass->name" :description="'Form '.$schoolClass->form_level.' · Academic year '.$schoolClass->academic_year.' · '.$students->count().' students'" :back="route('teacher.classes.index')">
+    <x-page-header :title="__('Class :name', ['name' => $schoolClass->name])" :description="__('Form :level · Academic year :year · :count students', ['level' => $schoolClass->form_level, 'year' => $schoolClass->academic_year, 'count' => $students->count()])" :back="route('teacher.classes.index')">
         <x-slot:actions>
             <a href="{{ route('teacher.assignments.create', ['school_class_id' => $schoolClass->id]) }}" class="btn btn-secondary"><x-icon name="plus" /> New Assignment</a>
             <a href="{{ route('teacher.materials.create', ['school_class_id' => $schoolClass->id]) }}" class="btn btn-primary"><x-icon name="upload" /> Upload Material</a>
@@ -36,7 +36,7 @@
                             <tr>
                                 <td><a href="{{ route('teacher.assignments.show', $assignment) }}" class="link">{{ $assignment->title }}</a></td>
                                 <td>{{ $assignment->subject->name }}</td>
-                                <td class="whitespace-nowrap">{{ $assignment->due_at->format('j M Y') }}</td>
+                                <td class="whitespace-nowrap">{{ $assignment->due_at->translatedFormat('j M Y') }}</td>
                                 <td>{{ $summary['submitted'] }}/{{ $summary['students'] }}</td>
                             </tr>
                         @empty
@@ -55,7 +55,7 @@
                                 <td><a href="{{ route('teacher.materials.show', $material) }}" class="link">{{ $material->title }}</a></td>
                                 <td>{{ $material->subject->name }}</td>
                                 <td>{{ $material->type->label() }}</td>
-                                <td class="whitespace-nowrap">{{ $material->created_at->format('j M Y') }}</td>
+                                <td class="whitespace-nowrap">{{ $material->created_at->translatedFormat('j M Y') }}</td>
                             </tr>
                         @empty
                             <tr><td colspan="4" class="text-center text-slate-500">No materials uploaded for this class.</td></tr>

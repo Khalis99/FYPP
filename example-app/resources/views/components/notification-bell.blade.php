@@ -30,7 +30,7 @@
                     <form method="POST" action="{{ route('notifications.read', $notification->id) }}">
                         @csrf
                         <button type="submit" @class(['block w-full px-4 py-3 text-left hover:bg-slate-50', 'bg-brand-50/60' => $notification->unread()])>
-                            <span class="block text-[15px] font-semibold text-slate-800">{{ $notification->data['title'] ?? 'Notification' }}</span>
+                            <span class="block text-[15px] font-semibold text-slate-800">{{ __($notification->data['title'] ?? 'Notification') }}</span>
                             <span class="block text-sm text-slate-600">{{ $notification->data['message'] ?? '' }}</span>
                             <span class="mt-1 block text-xs text-slate-400">{{ $notification->created_at->diffForHumans() }}</span>
                         </button>

@@ -59,7 +59,7 @@ class AssignmentController extends Controller
 
         $assignment = $request->teacher()->assignments()->create($data);
 
-        return redirect()->route('teacher.assignments.show', $assignment)->with('success', 'Assignment created successfully.');
+        return redirect()->route('teacher.assignments.show', $assignment)->with('success', __('Assignment created successfully.'));
     }
 
     /**
@@ -122,7 +122,7 @@ class AssignmentController extends Controller
 
         $assignment->update($data);
 
-        return redirect()->route('teacher.assignments.show', $assignment)->with('success', 'Assignment updated.');
+        return redirect()->route('teacher.assignments.show', $assignment)->with('success', __('Assignment updated.'));
     }
 
     public function destroy(Assignment $assignment): RedirectResponse
@@ -131,7 +131,7 @@ class AssignmentController extends Controller
 
         $assignment->delete();
 
-        return redirect()->route('teacher.assignments.index')->with('success', 'Assignment deleted.');
+        return redirect()->route('teacher.assignments.index')->with('success', __('Assignment deleted.'));
     }
 
     public function attachment(Assignment $assignment): StreamedResponse

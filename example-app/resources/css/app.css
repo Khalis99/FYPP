@@ -346,6 +346,66 @@ dialog {
 }
 
 /* ------------------------------------------------------------------ *
+ * Language switch (EN | BM)
+ * ------------------------------------------------------------------ */
+.lang-switch {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 5.5rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    border: 1px solid var(--card-border);
+    background-color: var(--field-bg);
+    color: var(--color-slate-600);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.lang-switch:hover {
+    border-color: var(--color-brand-200);
+    box-shadow: var(--shadow-card);
+}
+.lang-switch:focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+}
+.lang-thumb {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    border-radius: 9999px;
+    background-image: linear-gradient(135deg, #c2620a, #be123c);
+    box-shadow: 0 4px 10px -3px rgb(190 18 60 / 0.55);
+    transition: transform 0.32s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.lang-switch[data-lang='ms'] .lang-thumb {
+    transform: translateX(100%);
+}
+.lang-option {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    transition: color 0.2s;
+}
+.lang-switch[data-lang='en'] .lang-option:nth-of-type(2),
+.lang-switch[data-lang='ms'] .lang-option:nth-of-type(3) {
+    color: #fff;
+}
+/* On the dark login background */
+.aurora .lang-switch {
+    border-color: rgb(255 255 255 / 0.25);
+    background-color: rgb(255 255 255 / 0.1);
+    color: rgb(255 237 213 / 0.85);
+    backdrop-filter: blur(8px);
+}
+
+/* ------------------------------------------------------------------ *
  * Login aurora
  * ------------------------------------------------------------------ */
 .aurora {

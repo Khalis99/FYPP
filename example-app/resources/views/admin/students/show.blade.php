@@ -1,5 +1,5 @@
 <x-layouts.app :title="$student->name">
-    <x-page-header :title="$student->name" :description="'Student ID '.$student->student_code" :back="route('admin.students.index')">
+    <x-page-header :title="$student->name" :description="__('Student ID :code', ['code' => $student->student_code])" :back="route('admin.students.index')">
         <x-slot:actions>
             <a href="{{ route('admin.students.edit', $student) }}" class="btn btn-primary"><x-icon name="edit" /> Edit</a>
             <x-delete-button :action="route('admin.students.destroy', $student)" button="btn btn-danger" message="Delete this student record and all of their submissions?" />

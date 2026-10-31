@@ -33,6 +33,6 @@ class AssignTeacherRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return ['subject_id' => 'subject', 'teacher_id' => 'teacher'];
+        return ['subject_id' => __('subject'), 'teacher_id' => __('teacher')];
     }
 }

@@ -40,8 +40,8 @@ class PasswordUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'current_password.current_password' => 'Your current password is incorrect.',
-            'password.different' => 'Your new password must be different from your current password.',
+            'current_password.current_password' => __('Your current password is incorrect.'),
+            'password.different' => __('Your new password must be different from your current password.'),
         ];
     }
 }

@@ -15,9 +15,9 @@ enum SubmissionStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::Submitted => 'Submitted',
-            self::Late => 'Late',
-            self::NotSubmitted => 'Not Submitted',
+            self::Submitted => __('Submitted'),
+            self::Late => __('Late'),
+            self::NotSubmitted => __('Not Submitted'),
         };
     }
 

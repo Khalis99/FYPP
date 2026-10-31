@@ -21,7 +21,7 @@ class OpenAiCompatibleClient implements LlmClient
     public function complete(string $systemPrompt, string $userMessage): string
     {
         if (blank($this->model)) {
-            throw new AiGenerationException('The AI model is not configured. Please set AI_MODEL in the .env file.');
+            throw new AiGenerationException(__('The AI model is not configured. Please set AI_MODEL in the .env file.'));
         }
 
         try {
@@ -38,19 +38,19 @@ class OpenAiCompatibleClient implements LlmClient
         } catch (ConnectionException $exception) {
             Log::warning('AI provider connection failed', ['message' => $exception->getMessage()]);
 
-            throw new AiGenerationException('Could not connect to the AI service. Please check your internet connection and try again.');
+            throw new AiGenerationException(__('Could not connect to the AI service. Please check your internet connection and try again.'));
         }
 
         if ($response->failed()) {
             Log::warning('AI provider returned an error', ['status' => $response->status(), 'body' => $response->body()]);
 
-            throw new AiGenerationException('The AI service returned an error (HTTP '.$response->status().'). Please try again later.');
+            throw new AiGenerationException(__('The AI service returned an error (HTTP :status). Please try again later.', ['status' => $response->status()]));
         }
 
         $text = $response->json('choices.0.message.content');
 
         if (! is_string($text) || trim($text) === '') {
-            throw new AiGenerationException('The AI service returned an empty response. Please try again.');
+            throw new AiGenerationException(__('The AI service returned an empty response. Please try again.'));
         }
 
         return $text;

@@ -1,3 +1,4 @@
+{{-- i18n:off --}}
 {{--
     Read-only RPH laid out like the KPM daily lesson plan template (labels in Bahasa Melayu).
     Expects $document (RphDocument with subject, schoolClass, teacher.user loaded).

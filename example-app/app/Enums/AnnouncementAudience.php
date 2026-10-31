@@ -11,9 +11,9 @@ enum AnnouncementAudience: string
     public function label(): string
     {
         return match ($this) {
-            self::All => 'Everyone',
-            self::Teachers => 'Teachers only',
-            self::Admins => 'Administrators only',
+            self::All => __('Everyone'),
+            self::Teachers => __('Teachers only'),
+            self::Admins => __('Administrators only'),
         };
     }
 

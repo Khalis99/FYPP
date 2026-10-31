@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         User::create([...$request->accountData(), 'role' => UserRole::Admin]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Administrator account created.');
+        return redirect()->route('admin.users.index')->with('success', __('Administrator account created.'));
     }
 
     public function edit(User $user): View|RedirectResponse
@@ -64,7 +64,7 @@ class UserController extends Controller
     {
         $user->update($request->accountData());
 
-        return redirect()->route('admin.users.index')->with('success', 'Account updated.');
+        return redirect()->route('admin.users.index')->with('success', __('Account updated.'));
     }
 
     /**
@@ -73,11 +73,11 @@ class UserController extends Controller
     public function toggle(Request $request, User $user): RedirectResponse
     {
         if ($user->is($request->user())) {
-            return back()->with('error', 'You cannot deactivate your own account.');
+            return back()->with('error', __('You cannot deactivate your own account.'));
         }
 
         $user->update(['is_active' => ! $user->is_active]);
 
-        return back()->with('success', $user->name.' has been '.($user->is_active ? 'activated' : 'deactivated').'.');
+        return back()->with('success', $user->is_active ? __(':name has been activated.', ['name' => $user->name]) : __(':name has been deactivated.', ['name' => $user->name]));
     }
 }

@@ -30,7 +30,7 @@ class PasswordResetController extends Controller
         Password::sendResetLink($request->only('email'));
 
         // Same message whether or not the email exists, so accounts cannot be discovered.
-        return back()->with('status', 'If that email is registered, a password reset link has been sent to it.');
+        return back()->with('status', __('If that email is registered, a password reset link has been sent to it.'));
     }
 
     public function reset(Request $request, string $token): View
@@ -60,9 +60,9 @@ class PasswordResetController extends Controller
 
         if ($status !== Password::PASSWORD_RESET) {
             return back()->withInput($request->only('email'))
-                ->withErrors(['email' => 'This password reset link is invalid or has expired. Please request a new one.']);
+                ->withErrors(['email' => __('This password reset link is invalid or has expired. Please request a new one.')]);
         }
 
-        return redirect()->route('login')->with('status', 'Your password has been reset. You can now log in.');
+        return redirect()->route('login')->with('status', __('Your password has been reset. You can now log in.'));
     }
 }

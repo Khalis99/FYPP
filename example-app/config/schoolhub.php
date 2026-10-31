@@ -10,6 +10,21 @@ return [
 
     'school_name' => env('SCHOOL_NAME', 'SMK Seri Londang'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Interface Languages
+    |--------------------------------------------------------------------------
+    |
+    | Code => name. The English text in the views is the translation key; the
+    | Bahasa Melayu text lives in lang/ms.json.
+    |
+    */
+
+    'locales' => [
+        'en' => 'English',
+        'ms' => 'Bahasa Melayu',
+    ],
+
     'tagline' => 'Lighting the way for teachers',
 
     /*

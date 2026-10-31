@@ -45,11 +45,11 @@ class TimetableRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'start_time' => 'start time',
-            'end_time' => 'end time',
-            'subject_id' => 'subject',
-            'school_class_id' => 'class',
-            'teacher_id' => 'teacher',
+            'start_time' => __('start time'),
+            'end_time' => __('end time'),
+            'subject_id' => __('subject'),
+            'school_class_id' => __('class'),
+            'teacher_id' => __('teacher'),
         ];
     }
 

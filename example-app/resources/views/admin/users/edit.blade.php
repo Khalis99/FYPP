@@ -1,5 +1,5 @@
 <x-layouts.app title="Edit User">
-    <x-page-header :title="'Edit '.$user->name" :back="route('admin.users.index')" />
+    <x-page-header :title="__('Edit :name', ['name' => $user->name])" :back="route('admin.users.index')" />
 
     <x-card class="max-w-3xl">
         <form method="POST" action="{{ route('admin.users.update', $user) }}" class="space-y-6">

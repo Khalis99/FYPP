@@ -1,4 +1,4 @@
-@props(['action', 'message' => 'Are you sure you want to delete this? This cannot be undone.', 'label' => 'Delete', 'button' => 'link-danger'])
+@props(['action', 'message' => __('Are you sure you want to delete this? This cannot be undone.'), 'label' => __('Delete'), 'button' => 'link-danger'])
 
 <form method="POST" action="{{ $action }}" class="inline" data-confirm="{{ $message }}">
     @csrf

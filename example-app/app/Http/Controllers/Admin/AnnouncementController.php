@@ -55,7 +55,7 @@ class AnnouncementController extends Controller
         }
 
         return redirect()->route('admin.announcements.show', $announcement)
-            ->with('success', $announcement->isPublished() ? 'Announcement published.' : 'Announcement saved as draft.');
+            ->with('success', $announcement->isPublished() ? __('Announcement published.') : __('Announcement saved as draft.'));
     }
 
     public function show(Announcement $announcement): View
@@ -83,14 +83,14 @@ class AnnouncementController extends Controller
             $this->notifyAudience($announcement);
         }
 
-        return redirect()->route('admin.announcements.show', $announcement)->with('success', 'Announcement updated.');
+        return redirect()->route('admin.announcements.show', $announcement)->with('success', __('Announcement updated.'));
     }
 
     public function destroy(Announcement $announcement): RedirectResponse
     {
         $announcement->delete();
 
-        return redirect()->route('admin.announcements.index')->with('success', 'Announcement deleted.');
+        return redirect()->route('admin.announcements.index')->with('success', __('Announcement deleted.'));
     }
 
     /**
@@ -103,7 +103,7 @@ class AnnouncementController extends Controller
             $this->notifyAudience($announcement);
         }
 
-        return redirect()->route('admin.announcements.show', $announcement)->with('success', 'Announcement published.');
+        return redirect()->route('admin.announcements.show', $announcement)->with('success', __('Announcement published.'));
     }
 
     /**

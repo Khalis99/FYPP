@@ -40,6 +40,6 @@ class AnnouncementRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return ['body' => 'description', 'audience' => 'target audience'];
+        return ['body' => __('description'), 'audience' => __('target audience')];
     }
 }

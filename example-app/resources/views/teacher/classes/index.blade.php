@@ -15,7 +15,7 @@
 
     @if ($loads->isEmpty())
         <div class="card">
-            <x-empty-state icon="classes" title="No classes found" message="{{ $search ? 'Try a different search.' : 'You have not been assigned to any class yet. Please contact the administrator.' }}" />
+            <x-empty-state icon="classes" title="No classes found" message="{{ $search ? __('Try a different search.') : __('You have not been assigned to any class yet. Please contact the administrator.') }}" />
         </div>
     @else
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">

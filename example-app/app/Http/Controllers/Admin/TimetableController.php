@@ -54,7 +54,7 @@ class TimetableController extends Controller
     {
         Timetable::create($request->validated());
 
-        return redirect()->route('admin.timetable.index', ['day' => $request->validated('day')])->with('success', 'Timetable entry added.');
+        return redirect()->route('admin.timetable.index', ['day' => $request->validated('day')])->with('success', __('Timetable entry added.'));
     }
 
     public function edit(Timetable $timetable): View
@@ -66,14 +66,14 @@ class TimetableController extends Controller
     {
         $timetable->update($request->validated());
 
-        return redirect()->route('admin.timetable.index')->with('success', 'Timetable entry updated.');
+        return redirect()->route('admin.timetable.index')->with('success', __('Timetable entry updated.'));
     }
 
     public function destroy(Timetable $timetable): RedirectResponse
     {
         $timetable->delete();
 
-        return back()->with('success', 'Timetable entry deleted.');
+        return back()->with('success', __('Timetable entry deleted.'));
     }
 
     /**

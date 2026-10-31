@@ -17,10 +17,15 @@ class SubjectFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->unique()->randomElement([
+        $names = [
             'Mathematics', 'Science', 'English', 'Bahasa Melayu', 'History',
             'Geography', 'Design & Technology', 'Physical Education', 'Art', 'Music',
-        ]);
+        ];
+
+        // Subject names are unique, so skip the ones a test has already created by hand.
+        $available = array_values(array_diff($names, Subject::pluck('name')->all()));
+
+        $name = fake()->unique()->randomElement($available ?: $names);
 
         return [
             'name' => $name,

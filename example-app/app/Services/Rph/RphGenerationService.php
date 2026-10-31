@@ -94,13 +94,13 @@ class RphGenerationService
         $end = strrpos($reply, '}');
 
         if ($start === false || $end === false || $end < $start) {
-            throw new AiGenerationException('The AI response was not in the expected format. Please try generating again.');
+            throw new AiGenerationException(__('The AI response was not in the expected format. Please try generating again.'));
         }
 
         $decoded = json_decode(substr($reply, $start, $end - $start + 1), true);
 
         if (! is_array($decoded)) {
-            throw new AiGenerationException('The AI response could not be read. Please try generating again.');
+            throw new AiGenerationException(__('The AI response could not be read. Please try generating again.'));
         }
 
         return $decoded;

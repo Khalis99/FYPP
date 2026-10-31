@@ -37,15 +37,15 @@
                                 <td class="font-medium"><a href="{{ route('teacher.students.show', $row['student']) }}" class="hover:underline">{{ $row['student']->name }}</a></td>
                                 <td>{{ $row['student']->student_code }}</td>
                                 <td><x-badge :color="$row['status']->color()">{{ $row['status']->label() }}</x-badge></td>
-                                <td class="whitespace-nowrap">{{ $row['submission']?->submitted_at->format('j M Y, g:i A') ?? '—' }}</td>
-                                <td>
+                                <td class="whitespace-nowrap">{{ $row['submission']?->submitted_at->translatedFormat('j M Y, g:i A') ?? '—' }}</td>
+                                <td class="whitespace-nowrap">
                                     @if ($row['submission']?->file_path)
                                         <a href="{{ route('teacher.submissions.download', $row['submission']) }}" class="link inline-flex items-center gap-1"><x-icon name="download" class="size-4" /> Download</a>
                                     @else
                                         <span class="text-slate-400">—</span>
                                     @endif
                                 </td>
-                                <td class="text-right">
+                                <td class="text-right whitespace-nowrap">
                                     @if ($row['submission'])
                                         <x-delete-button :action="route('teacher.submissions.destroy', $row['submission'])" label="Remove" message="Remove this recorded submission? The student will be marked as not submitted." />
                                     @endif
@@ -64,7 +64,7 @@
                 <dl class="space-y-4 text-[15px]">
                     <div>
                         <dt class="text-sm text-slate-500">Due date</dt>
-                        <dd class="font-semibold">{{ $assignment->due_at->format('l, j F Y, g:i A') }}</dd>
+                        <dd class="font-semibold">{{ $assignment->due_at->translatedFormat('l, j F Y, g:i A') }}</dd>
                         <dd>@if ($assignment->isActive())<x-badge color="green">Active</x-badge>@else<x-badge>Closed</x-badge>@endif</dd>
                     </div>
                     @if ($assignment->description)

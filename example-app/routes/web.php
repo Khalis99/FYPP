@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Teacher;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn () => auth()->check()
     ? redirect()->route(auth()->user()->role->homeRoute())
     : redirect()->route('login'));
+
+Route::post('language/{locale}', [LocaleController::class, 'update'])->name('locale.update');
 
 /*
 |--------------------------------------------------------------------------

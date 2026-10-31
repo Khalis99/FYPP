@@ -52,7 +52,7 @@ class TeachingMaterialController extends Controller
             'file_size' => $file->getSize(),
         ]);
 
-        return redirect()->route('teacher.materials.show', $material)->with('success', 'Teaching material uploaded successfully.');
+        return redirect()->route('teacher.materials.show', $material)->with('success', __('Teaching material uploaded successfully.'));
     }
 
     public function show(TeachingMaterial $material): View
@@ -89,7 +89,7 @@ class TeachingMaterialController extends Controller
 
         $material->update($data);
 
-        return redirect()->route('teacher.materials.show', $material)->with('success', 'Teaching material updated.');
+        return redirect()->route('teacher.materials.show', $material)->with('success', __('Teaching material updated.'));
     }
 
     public function destroy(TeachingMaterial $material): RedirectResponse
@@ -98,7 +98,7 @@ class TeachingMaterialController extends Controller
 
         $material->delete();
 
-        return redirect()->route('teacher.materials.index')->with('success', 'Teaching material deleted.');
+        return redirect()->route('teacher.materials.index')->with('success', __('Teaching material deleted.'));
     }
 
     public function download(TeachingMaterial $material): StreamedResponse

@@ -31,7 +31,7 @@
 
         <div class="rph-footer">
             <span>Prepared by: {{ $document->teacher->user->name }}</span>
-            <span>Printed on {{ now()->format('j F Y') }}</span>
+            <span>Printed on {{ now()->translatedFormat('j F Y') }}</span>
         </div>
     </div>
 </body>

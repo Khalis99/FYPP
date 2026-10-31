@@ -1,5 +1,5 @@
 <x-layouts.app :title="$schoolClass->name">
-    <x-page-header :title="'Class '.$schoolClass->name" :description="'Form '.$schoolClass->form_level.' · Academic year '.$schoolClass->academic_year" :back="route('admin.classes.index')">
+    <x-page-header :title="__('Class :name', ['name' => $schoolClass->name])" :description="__('Form :level · Academic year :year', ['level' => $schoolClass->form_level, 'year' => $schoolClass->academic_year])" :back="route('admin.classes.index')">
         <x-slot:actions>
             <a href="{{ route('admin.classes.edit', $schoolClass) }}" class="btn btn-secondary"><x-icon name="edit" /> Edit</a>
             <a href="{{ route('admin.timetable.create', ['school_class_id' => $schoolClass->id]) }}" class="btn btn-secondary"><x-icon name="timetable" /> Add Timetable Entry</a>
@@ -8,7 +8,7 @@
 
     <div class="grid gap-6 lg:grid-cols-3">
         <div class="space-y-6 lg:col-span-2">
-            <x-card :title="'Students ('.$students->count().')'" :padding="false">
+            <x-card :title="__('Students (:count)', ['count' => $students->count()])" :padding="false">
                 <x-slot:actions>
                     <a href="{{ route('admin.students.create', ['school_class_id' => $schoolClass->id]) }}" class="btn btn-secondary btn-sm"><x-icon name="plus" class="size-4" /> New Student</a>
                 </x-slot:actions>
@@ -22,7 +22,7 @@
                                 <td><x-active-badge :active="$student->is_active" /></td>
                                 <td class="text-right">
                                     <x-delete-button :action="route('admin.classes.students.destroy', [$schoolClass, $student])" label="Remove"
-                                                     :message="'Remove '.$student->name.' from '.$schoolClass->name.'? The student record is kept.'" />
+                                                     :message="__('Remove :student from :class? The student record is kept.', ['student' => $student->name, 'class' => $schoolClass->name])" />
                                 </td>
                             </tr>
                         @empty
@@ -42,7 +42,7 @@
                             <label for="student_ids" class="form-label">Select students</label>
                             <select id="student_ids" name="student_ids[]" multiple size="8" class="form-input">
                                 @foreach ($availableStudents as $student)
-                                    <option value="{{ $student->id }}">{{ $student->name }} ({{ $student->student_code }}){{ $student->schoolClass ? ' — currently in '.$student->schoolClass->name : ' — no class' }}</option>
+                                    <option value="{{ $student->id }}">{{ $student->name }} ({{ $student->student_code }}){{ $student->schoolClass ? ' — '.__('currently in :class', ['class' => $student->schoolClass->name]) : ' — '.__('no class') }}</option>
                                 @endforeach
                             </select>
                             <p class="form-hint">Hold Ctrl (or Cmd on Mac) to select more than one student. Students already in another class will be moved.</p>

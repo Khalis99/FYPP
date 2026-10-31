@@ -1,7 +1,7 @@
 <x-layouts.app title="Dashboard">
     <div class="mb-6">
         <h2 class="text-2xl font-extrabold text-slate-900 sm:text-3xl"><x-greeting :user="auth()->user()" />!</h2>
-        <p class="mt-1 text-[16px] text-slate-600">{{ now()->format('l, j F Y') }} · Here is your teaching day at a glance.</p>
+        <p class="mt-1 text-[16px] text-slate-600">{{ now()->translatedFormat('l, j F Y') }} · Here is your teaching day at a glance.</p>
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -33,7 +33,7 @@
                                 <tr>
                                     <td><a href="{{ route('teacher.assignments.show', $assignment) }}" class="link">{{ $assignment->title }}</a></td>
                                     <td>{{ $assignment->schoolClass->name }} <span class="block text-sm text-slate-500">{{ $assignment->subject->name }}</span></td>
-                                    <td class="whitespace-nowrap">{{ $assignment->due_at->format('j M Y') }}<span class="block text-sm text-slate-500">{{ $assignment->due_at->diffForHumans() }}</span></td>
+                                    <td class="whitespace-nowrap">{{ $assignment->due_at->translatedFormat('j M Y') }}<span class="block text-sm text-slate-500">{{ $assignment->due_at->diffForHumans() }}</span></td>
                                     <td class="whitespace-nowrap">
                                         <span class="font-semibold">{{ $summary['submitted'] }}/{{ $summary['students'] }}</span>
                                         <span class="block text-sm text-slate-500">{{ $summary['rate'] }}%</span>
@@ -61,7 +61,7 @@
                                     @endunless
                                 </div>
                                 <p class="mt-0.5 line-clamp-2 text-[15px] text-slate-600">{{ $announcement->body }}</p>
-                                <p class="mt-1 text-sm text-slate-500">{{ $announcement->published_at->format('j M Y') }}</p>
+                                <p class="mt-1 text-sm text-slate-500">{{ $announcement->published_at->translatedFormat('j M Y') }}</p>
                             </a>
                         </li>
                     @empty
@@ -79,7 +79,7 @@
                 <a href="{{ route('teacher.rph.create') }}" class="btn btn-light relative mt-4">Generate RPH</a>
             </section>
 
-            <x-card :title="'Today\'s Schedule'">
+            <x-card :title="__('Today\'s Schedule')">
                 @if (! $today)
                     <p class="text-slate-600">No classes today — enjoy your weekend!</p>
                 @else

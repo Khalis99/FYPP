@@ -9,7 +9,7 @@
     </div>
 
     <div class="max-h-[22rem] overflow-y-auto p-2">
-        @foreach (['Go to' => $pages, 'Quick actions' => $actions] as $heading => $items)
+        @foreach ([__('Go to') => $pages, __('Quick actions') => $actions] as $heading => $items)
             @if (count($items))
                 <div data-palette-group class="mb-1">
                     <p class="px-3 pt-2 pb-1 text-xs font-extrabold tracking-wider text-slate-500 uppercase">{{ $heading }}</p>

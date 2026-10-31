@@ -21,7 +21,7 @@
             <dl class="space-y-3 text-[15px]">
                 <div><dt class="text-sm text-slate-500">Status</dt><dd><x-badge :color="$announcement->isPublished() ? 'green' : 'slate'">{{ $announcement->status->label() }}</x-badge></dd></div>
                 <div><dt class="text-sm text-slate-500">Target audience</dt><dd>{{ $announcement->audience->label() }}</dd></div>
-                <div><dt class="text-sm text-slate-500">Published</dt><dd>{{ $announcement->published_at?->format('j F Y, g:i A') ?? 'Not published' }}</dd></div>
+                <div><dt class="text-sm text-slate-500">Published</dt><dd>{{ $announcement->published_at?->translatedFormat('j F Y, g:i A') ?? __('Not published') }}</dd></div>
                 <div><dt class="text-sm text-slate-500">Author</dt><dd>{{ $announcement->author->name }}</dd></div>
                 <div><dt class="text-sm text-slate-500">Read by</dt><dd>{{ $announcement->readers_count }} user(s)</dd></div>
             </dl>

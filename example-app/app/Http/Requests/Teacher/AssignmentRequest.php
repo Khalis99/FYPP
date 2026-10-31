@@ -31,7 +31,7 @@ class AssignmentRequest extends TeacherFormRequest
     public function messages(): array
     {
         return parent::messages() + [
-            'due_at.after' => 'The due date must be in the future.',
+            'due_at.after' => __('The due date must be in the future.'),
         ];
     }
 
@@ -40,6 +40,6 @@ class AssignmentRequest extends TeacherFormRequest
      */
     public function attributes(): array
     {
-        return parent::attributes() + ['due_at' => 'due date'];
+        return parent::attributes() + ['due_at' => __('due date')];
     }
 }

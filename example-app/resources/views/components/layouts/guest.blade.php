@@ -10,6 +10,7 @@
     <script>
         try { document.documentElement.dataset.theme = localStorage.getItem('pelita-theme') || 'light'; } catch (e) {}
     </script>
+    <x-js-strings />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen font-sans text-slate-900 antialiased">
@@ -22,12 +23,16 @@
             <span class="ember" aria-hidden="true" style="--x: {{ ($i * 53) % 97 + 1 }}%; --s: {{ 4 + ($i * 7) % 9 }}px; --d: {{ 9 + ($i * 5) % 9 }}s; --delay: -{{ ($i * 3) % 14 }}s; --dx: {{ (($i * 29) % 80) - 40 }}px"></span>
         @endforeach
 
+        <div class="absolute top-4 right-4 z-20 sm:top-6 sm:right-8">
+            <x-language-switch />
+        </div>
+
         <div class="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
             <section class="text-white">
                 <div class="flex items-center gap-3">
                     <div class="leading-tight">
                         <p class="text-2xl font-extrabold tracking-wide">Pelita</p>
-                        <p class="text-sm font-semibold text-orange-100">{{ config('schoolhub.tagline') }}</p>
+                        <p class="text-sm font-semibold text-orange-100">{{ __(config('schoolhub.tagline')) }}</p>
                     </div>
                 </div>
 

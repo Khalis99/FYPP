@@ -14,7 +14,7 @@ enum Weekday: int
 
     public function label(): string
     {
-        return $this->name;
+        return __($this->name);
     }
 
     /**

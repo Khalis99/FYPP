@@ -5,7 +5,7 @@
 @error('status')<p class="form-error">{{ $message }}</p>@enderror
 
 <div class="flex flex-wrap gap-3">
-    <button type="submit" name="status" value="published" class="btn btn-primary"><x-icon name="announcements" /> {{ $announcement->isPublished() ? 'Save' : 'Publish now' }}</button>
+    <button type="submit" name="status" value="published" class="btn btn-primary"><x-icon name="announcements" /> {{ $announcement->isPublished() ? __('Save') : __('Publish now') }}</button>
     @unless ($announcement->isPublished())
         <button type="submit" name="status" value="draft" class="btn btn-secondary">Save as draft</button>
     @else

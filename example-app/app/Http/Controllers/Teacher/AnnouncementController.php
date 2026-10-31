@@ -51,7 +51,7 @@ class AnnouncementController extends Controller
             $announcement->id => ['read_at' => now()],
         ]);
 
-        return back()->with('success', 'Announcement marked as read.');
+        return back()->with('success', __('Announcement marked as read.'));
     }
 
     private function ensureVisible(Request $request, Announcement $announcement): void

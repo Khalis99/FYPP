@@ -1,5 +1,5 @@
 <x-layouts.app title="Announcement">
-    <x-page-header :title="$announcement->title" :description="$announcement->published_at->format('l, j F Y').' · '.$announcement->author->name" :back="route('teacher.announcements.index')" />
+    <x-page-header :title="$announcement->title" :description="$announcement->published_at->translatedFormat('l, j F Y').' · '.$announcement->author->name" :back="route('teacher.announcements.index')" />
 
     <x-card class="max-w-3xl">
         <div class="text-[17px] leading-relaxed whitespace-pre-line text-slate-800">{{ $announcement->body }}</div>

@@ -63,7 +63,7 @@
                 @csrf
                 @method('PUT')
 
-                @foreach (['current_password' => 'Current password', 'password' => 'New password', 'password_confirmation' => 'Confirm new password'] as $field => $label)
+                @foreach (['current_password' => __('Current password'), 'password' => __('New password'), 'password_confirmation' => __('Confirm new password')] as $field => $label)
                     <div>
                         <label for="{{ $field }}" class="form-label">{{ $label }}</label>
                         <input type="password" id="{{ $field }}" name="{{ $field }}" autocomplete="{{ $field === 'current_password' ? 'current-password' : 'new-password' }}"
@@ -77,6 +77,28 @@
                 <p class="form-hint">At least 8 characters, with letters and numbers.</p>
                 <button type="submit" class="btn btn-primary w-full"><x-icon name="key" /> Change Password</button>
             </form>
+        </x-card>
+
+        <x-card title="Language" class="lg:col-span-2">
+            <p class="text-[15px] text-slate-600">Choose the language Pelita uses for you. It is saved to your account, so it stays the same on any device.</p>
+
+            <div class="mt-4 flex flex-wrap gap-3">
+                @foreach (config('schoolhub.locales') as $code => $name)
+                    <form method="POST" action="{{ route('locale.update', $code) }}">
+                        @csrf
+                        <button type="submit" aria-pressed="{{ app()->getLocale() === $code ? 'true' : 'false' }}" @class([
+                            'btn min-w-44',
+                            'btn-primary' => app()->getLocale() === $code,
+                            'btn-secondary' => app()->getLocale() !== $code,
+                        ])>
+                            @if (app()->getLocale() === $code)
+                                <x-icon name="check" class="size-5" />
+                            @endif
+                            {{ $name }}
+                        </button>
+                    </form>
+                @endforeach
+            </div>
         </x-card>
     </div>
 </x-layouts.app>

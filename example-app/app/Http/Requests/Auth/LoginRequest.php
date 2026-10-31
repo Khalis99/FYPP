@@ -39,9 +39,9 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'Please enter a valid email address, for example name@school.edu.my.',
-            'password.required' => 'Please enter your password.',
+            'email.required' => __('Please enter your email address.'),
+            'email.email' => __('Please enter a valid email address, for example name@school.edu.my.'),
+            'password.required' => __('Please enter your password.'),
         ];
     }
 
@@ -58,7 +58,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => 'The email or password you entered is incorrect.',
+                'email' => __('The email or password you entered is incorrect.'),
             ]);
         }
 
@@ -66,7 +66,7 @@ class LoginRequest extends FormRequest
             Auth::logout();
 
             throw ValidationException::withMessages([
-                'email' => 'Your account has been deactivated. Please contact the school administrator.',
+                'email' => __('Your account has been deactivated. Please contact the school administrator.'),
             ]);
         }
 
@@ -87,7 +87,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => "Too many login attempts. Please try again in {$seconds} seconds.",
+            'email' => __('Too many login attempts. Please try again in :seconds seconds.', ['seconds' => $seconds]),
         ]);
     }
 

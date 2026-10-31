@@ -1,7 +1,7 @@
 <x-layouts.app title="Admin Dashboard">
     <div class="mb-6">
         <h2 class="text-2xl font-extrabold text-slate-900 sm:text-3xl"><x-greeting :user="auth()->user()" /></h2>
-        <p class="mt-1 text-[16px] text-slate-600">{{ config('schoolhub.school_name') }} · {{ now()->format('l, j F Y') }}</p>
+        <p class="mt-1 text-[16px] text-slate-600">{{ config('schoolhub.school_name') }} · {{ now()->translatedFormat('l, j F Y') }}</p>
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
@@ -43,7 +43,7 @@
                             <x-avatar :user="$user" class="size-9 text-sm" />
                             <div class="min-w-0 flex-1">
                                 <p class="truncate font-semibold">{{ $user->name }}</p>
-                                <p class="text-sm text-slate-500">{{ $user->role->label() }} · {{ $user->created_at->format('j M Y') }}</p>
+                                <p class="text-sm text-slate-500">{{ $user->role->label() }} · {{ $user->created_at->translatedFormat('j M Y') }}</p>
                             </div>
                         </li>
                     @endforeach
@@ -57,7 +57,7 @@
                         <li class="py-2.5 first:pt-0 last:pb-0">
                             <a href="{{ route('admin.announcements.show', $announcement) }}" class="font-semibold hover:text-brand-700">{{ $announcement->title }}</a>
                             <p class="text-sm text-slate-500">
-                                {{ $announcement->status->label() }} · {{ ($announcement->published_at ?? $announcement->created_at)->format('j M Y') }}
+                                {{ $announcement->status->label() }} · {{ ($announcement->published_at ?? $announcement->created_at)->translatedFormat('j M Y') }}
                             </p>
                         </li>
                     @empty

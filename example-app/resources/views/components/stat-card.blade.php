@@ -1,3 +1,4 @@
+{{-- i18n:off --}}
 @props(['label', 'value', 'icon', 'color' => 'blue', 'href' => null])
 
 @php

@@ -1,5 +1,5 @@
 <x-layouts.app :title="$student->name">
-    <x-page-header :title="$student->name" :description="'Student ID '.$student->student_code" :back="route('teacher.students.index')" />
+    <x-page-header :title="$student->name" :description="__('Student ID :code', ['code' => $student->student_code])" :back="route('teacher.students.index')" />
 
     <div class="grid gap-6 lg:grid-cols-3">
         <x-card title="Student Information">
@@ -43,7 +43,7 @@
                             <tr>
                                 <td><a href="{{ route('teacher.assignments.show', $row['assignment']) }}" class="link">{{ $row['assignment']->title }}</a></td>
                                 <td>{{ $row['assignment']->subject->name }}</td>
-                                <td class="whitespace-nowrap">{{ $row['assignment']->due_at->format('j M Y') }}</td>
+                                <td class="whitespace-nowrap">{{ $row['assignment']->due_at->translatedFormat('j M Y') }}</td>
                                 <td>
                                     @if ($row['status'])
                                         <x-badge :color="$row['status']->color()">{{ $row['status']->label() }}</x-badge>
@@ -51,7 +51,7 @@
                                         <x-badge color="blue">Pending</x-badge>
                                     @endif
                                 </td>
-                                <td class="whitespace-nowrap">{{ $row['submission']?->submitted_at->format('j M Y') ?? '—' }}</td>
+                                <td class="whitespace-nowrap">{{ $row['submission']?->submitted_at->translatedFormat('j M Y') ?? '—' }}</td>
                             </tr>
                         @empty
                             <tr><td colspan="5" class="text-center text-slate-500">No assignments yet.</td></tr>

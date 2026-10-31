@@ -49,10 +49,10 @@ class RecordSubmissionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'student_id.exists' => 'Please choose a student from this class.',
-            'student_id.unique' => 'This student already has a submission recorded.',
-            'submitted_at.before_or_equal' => 'The submission date cannot be in the future.',
-            'file.mimes' => 'This file type is not allowed. Please upload a PDF, Word, PowerPoint, Excel, JPG or PNG file.',
+            'student_id.exists' => __('Please choose a student from this class.'),
+            'student_id.unique' => __('This student already has a submission recorded.'),
+            'submitted_at.before_or_equal' => __('The submission date cannot be in the future.'),
+            'file.mimes' => __('This file type is not allowed. Please upload a PDF, Word, PowerPoint, Excel, JPG or PNG file.'),
         ];
     }
 
@@ -61,6 +61,6 @@ class RecordSubmissionRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return ['student_id' => 'student', 'submitted_at' => 'submission date'];
+        return ['student_id' => __('student'), 'submitted_at' => __('submission date')];
     }
 }

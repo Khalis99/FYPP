@@ -25,7 +25,7 @@ class TeacherRequest extends UserRequest
      */
     public function attributes(): array
     {
-        return ['teacher_code' => 'teacher ID'];
+        return ['teacher_code' => __('teacher ID')];
     }
 
     protected function editedUserId(): ?int

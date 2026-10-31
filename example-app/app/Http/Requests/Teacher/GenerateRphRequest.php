@@ -44,10 +44,10 @@ class GenerateRphRequest extends TeacherFormRequest
     public function attributes(): array
     {
         return parent::attributes() + [
-            'lesson_date' => 'date',
-            'start_time' => 'start time',
-            'duration_minutes' => 'duration',
-            'student_count' => 'number of students',
+            'lesson_date' => __('date'),
+            'start_time' => __('start time'),
+            'duration_minutes' => __('duration'),
+            'student_count' => __('number of students'),
         ];
     }
 

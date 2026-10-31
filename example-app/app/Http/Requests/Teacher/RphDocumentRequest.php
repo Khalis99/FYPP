@@ -43,10 +43,10 @@ class RphDocumentRequest extends TeacherFormRequest
     public function attributes(): array
     {
         $attributes = parent::attributes() + [
-            'lesson_date' => 'date',
-            'start_time' => 'start time',
-            'duration_minutes' => 'duration',
-            'student_count' => 'number of students',
+            'lesson_date' => __('date'),
+            'start_time' => __('start time'),
+            'duration_minutes' => __('duration'),
+            'student_count' => __('number of students'),
         ];
 
         foreach (RphContent::SECTIONS as $key => [$label]) {

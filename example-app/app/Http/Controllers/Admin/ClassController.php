@@ -58,7 +58,7 @@ class ClassController extends Controller
             return $schoolClass;
         });
 
-        return redirect()->route('admin.classes.show', $schoolClass)->with('success', 'Class created.');
+        return redirect()->route('admin.classes.show', $schoolClass)->with('success', __('Class created.'));
     }
 
     public function show(SchoolClass $schoolClass): View
@@ -86,14 +86,14 @@ class ClassController extends Controller
     {
         $schoolClass->update($request->safe()->only(['name', 'form_level', 'academic_year']));
 
-        return redirect()->route('admin.classes.show', $schoolClass)->with('success', 'Class updated.');
+        return redirect()->route('admin.classes.show', $schoolClass)->with('success', __('Class updated.'));
     }
 
     public function destroy(SchoolClass $schoolClass): RedirectResponse
     {
         $schoolClass->delete();
 
-        return redirect()->route('admin.classes.index')->with('success', 'Class deleted. Its students are now without a class.');
+        return redirect()->route('admin.classes.index')->with('success', __('Class deleted. Its students are now without a class.'));
     }
 
     /**
@@ -108,14 +108,14 @@ class ClassController extends Controller
 
         $count = Student::whereIn('id', $validated['student_ids'])->update(['school_class_id' => $schoolClass->id]);
 
-        return back()->with('success', "{$count} student(s) added to {$schoolClass->name}.");
+        return back()->with('success', __(':count student(s) added to :class.', ['count' => $count, 'class' => $schoolClass->name]));
     }
 
     public function removeStudent(SchoolClass $schoolClass, Student $student): RedirectResponse
     {
         $student->update(['school_class_id' => null]);
 
-        return back()->with('success', "{$student->name} removed from {$schoolClass->name}.");
+        return back()->with('success', __(':student removed from :class.', ['student' => $student->name, 'class' => $schoolClass->name]));
     }
 
     /**

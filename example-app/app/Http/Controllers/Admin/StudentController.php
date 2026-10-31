@@ -49,7 +49,7 @@ class StudentController extends Controller
     {
         $student = Student::create($request->validated());
 
-        return redirect()->route('admin.students.show', $student)->with('success', 'Student record created.');
+        return redirect()->route('admin.students.show', $student)->with('success', __('Student record created.'));
     }
 
     public function show(Student $student): View
@@ -69,14 +69,14 @@ class StudentController extends Controller
     {
         $student->update($request->validated());
 
-        return redirect()->route('admin.students.show', $student)->with('success', 'Student record updated.');
+        return redirect()->route('admin.students.show', $student)->with('success', __('Student record updated.'));
     }
 
     public function destroy(Student $student): RedirectResponse
     {
         $student->delete();
 
-        return redirect()->route('admin.students.index')->with('success', 'Student record deleted.');
+        return redirect()->route('admin.students.index')->with('success', __('Student record deleted.'));
     }
 
     /**

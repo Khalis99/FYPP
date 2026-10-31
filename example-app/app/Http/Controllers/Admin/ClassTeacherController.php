@@ -20,7 +20,7 @@ class ClassTeacherController extends Controller
             ['teacher_id' => $request->validated('teacher_id')],
         );
 
-        return back()->with('success', 'Teacher assigned.');
+        return back()->with('success', __('Teacher assigned.'));
     }
 
     public function destroy(SchoolClass $schoolClass, ClassTeacher $classTeacher): RedirectResponse
@@ -29,6 +29,6 @@ class ClassTeacherController extends Controller
 
         $classTeacher->delete();
 
-        return back()->with('success', 'Teacher removed from this subject.');
+        return back()->with('success', __('Teacher removed from this subject.'));
     }
 }

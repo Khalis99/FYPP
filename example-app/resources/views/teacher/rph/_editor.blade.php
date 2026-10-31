@@ -21,9 +21,9 @@
     <div class="grid gap-5 lg:grid-cols-2">
         @foreach ($sections as $key => [$label, $isList, $malayLabel])
             <div @class(['lg:col-span-2' => in_array($key, ['teaching_activities', 'learning_objectives', 'reflection'])])>
-                <x-form.textarea :name="'content['.$key.']'" :id="'content_'.$key" :label="$label.' ('.$malayLabel.')'" :value="$form[$key]"
+                <x-form.textarea :name="'content['.$key.']'" :id="'content_'.$key" :label="app()->getLocale() === 'ms' ? $malayLabel : __($label).' ('.$malayLabel.')'" :value="$form[$key]"
                                  :rows="$isList ? 5 : 3" :required="$key === 'learning_objectives'"
-                                 :hint="$key === 'reflection' ? 'Usually completed after the lesson. Leave empty to print the fill-in reflection lines.' : null" />
+                                 :hint="$key === 'reflection' ? __('Usually completed after the lesson. Leave empty to print the fill-in reflection lines.') : null" />
             </div>
         @endforeach
     </div>

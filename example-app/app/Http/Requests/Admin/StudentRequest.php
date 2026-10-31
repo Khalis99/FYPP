@@ -39,6 +39,6 @@ class StudentRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return ['student_code' => 'student ID', 'school_class_id' => 'class', 'is_active' => 'status'];
+        return ['student_code' => __('student ID'), 'school_class_id' => __('class'), 'is_active' => __('status')];
     }
 }

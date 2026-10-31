@@ -1,5 +1,5 @@
 <x-layouts.app :title="$document->title">
-    <x-page-header :title="$document->title" :description="'Last updated '.$document->updated_at->format('j M Y, g:i A')" :back="route('teacher.rph.index')">
+    <x-page-header :title="$document->title" :description="__('Last updated :date', ['date' => $document->updated_at->translatedFormat('j M Y, g:i A')])" :back="route('teacher.rph.index')">
         <x-slot:actions>
             <a href="{{ route('teacher.rph.edit', $document) }}" class="btn btn-primary"><x-icon name="edit" /> Edit</a>
             <a href="{{ route('teacher.rph.print', $document) }}" class="btn btn-secondary" target="_blank"><x-icon name="printer" /> Print</a>

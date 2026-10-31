@@ -43,13 +43,13 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile.show')->with('success', 'Your profile has been updated.');
+        return redirect()->route('profile.show')->with('success', __('Your profile has been updated.'));
     }
 
     public function updatePassword(PasswordUpdateRequest $request): RedirectResponse
     {
         $request->user()->update(['password' => $request->validated('password')]);
 
-        return redirect()->route('profile.show')->with('success', 'Your password has been changed.');
+        return redirect()->route('profile.show')->with('success', __('Your password has been changed.'));
     }
 }

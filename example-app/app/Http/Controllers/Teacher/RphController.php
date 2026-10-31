@@ -80,7 +80,7 @@ class RphController extends Controller
         ]);
 
         return redirect()->route('teacher.rph.draft')
-            ->with('success', 'RPH draft generated. Please review and edit it before saving.');
+            ->with('success', __('RPH draft generated. Please review and edit it before saving.'));
     }
 
     public function draft(Request $request): View|RedirectResponse
@@ -128,7 +128,7 @@ class RphController extends Controller
             'ai_provider' => $draft['provider'] ?? null,
         ]);
 
-        return redirect()->route('teacher.rph.show', $document)->with('success', 'RPH saved successfully.');
+        return redirect()->route('teacher.rph.show', $document)->with('success', __('RPH saved successfully.'));
     }
 
     public function show(RphDocument $rph): View
@@ -154,7 +154,7 @@ class RphController extends Controller
 
         $rph->update($request->documentData());
 
-        return redirect()->route('teacher.rph.show', $rph)->with('success', 'RPH saved successfully.');
+        return redirect()->route('teacher.rph.show', $rph)->with('success', __('RPH saved successfully.'));
     }
 
     public function destroy(RphDocument $rph): RedirectResponse
@@ -163,7 +163,7 @@ class RphController extends Controller
 
         $rph->delete();
 
-        return redirect()->route('teacher.rph.index')->with('success', 'RPH deleted.');
+        return redirect()->route('teacher.rph.index')->with('success', __('RPH deleted.'));
     }
 
     /**

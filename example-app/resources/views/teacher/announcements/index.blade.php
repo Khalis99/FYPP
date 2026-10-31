@@ -25,7 +25,7 @@
                     @endif
                 </div>
                 <p class="mt-1 line-clamp-2 text-[16px] text-slate-700">{{ $announcement->body }}</p>
-                <p class="mt-2 text-sm text-slate-500">{{ $announcement->published_at->format('j F Y') }} · {{ $announcement->author->name }}</p>
+                <p class="mt-2 text-sm text-slate-500">{{ $announcement->published_at->translatedFormat('j F Y') }} · {{ $announcement->author->name }}</p>
             </a>
         @empty
             <div class="card"><x-empty-state icon="announcements" title="No announcements found" /></div>
