@@ -5,37 +5,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ? $title.' · ' : '' }}SchoolHub</title>
+    <title>{{ $title ? $title.' · ' : '' }}Pelita</title>
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    <script>
+        try { document.documentElement.dataset.theme = localStorage.getItem('pelita-theme') || 'light'; } catch (e) {}
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-slate-100 font-sans text-slate-900 antialiased">
-    <div class="flex min-h-screen flex-col lg:flex-row">
-        <section class="flex flex-col justify-between bg-brand-700 px-8 py-8 text-white lg:w-[42%] lg:px-14 lg:py-14">
-            <div class="flex items-center gap-3">
-                <x-icon name="classes" class="size-10" />
-                <div class="leading-tight">
-                    <p class="text-2xl font-bold">SchoolHub</p>
-                    <p class="text-sm text-brand-100">{{ config('schoolhub.tagline') }}</p>
+<body class="min-h-screen font-sans text-slate-900 antialiased">
+    <div class="aurora flex min-h-screen items-center justify-center overflow-hidden px-4 py-10 sm:px-8" data-aurora>
+        {{-- Drifting colour, and embers that rise like sparks from a lantern --}}
+        <span class="blob -top-32 -left-24 size-[28rem] bg-orange-500" aria-hidden="true"></span>
+        <span class="blob -right-32 -bottom-40 size-[32rem] bg-rose-600" style="animation-delay: -6s" aria-hidden="true"></span>
+        <span class="blob top-1/3 left-1/2 size-80 bg-amber-400 opacity-30" style="animation-delay: -11s" aria-hidden="true"></span>
+        @foreach (range(1, 18) as $i)
+            <span class="ember" aria-hidden="true" style="--x: {{ ($i * 53) % 97 + 1 }}%; --s: {{ 4 + ($i * 7) % 9 }}px; --d: {{ 9 + ($i * 5) % 9 }}s; --delay: -{{ ($i * 3) % 14 }}s; --dx: {{ (($i * 29) % 80) - 40 }}px"></span>
+        @endforeach
+
+        <div class="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+            <section class="text-white">
+                <div class="flex items-center gap-3">
+                    <div class="leading-tight">
+                        <p class="text-2xl font-extrabold tracking-wide">Pelita</p>
+                        <p class="text-sm font-semibold text-orange-100">{{ config('schoolhub.tagline') }}</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="hidden lg:block">
-                <p class="text-3xl leading-snug font-semibold">Everything you need for teaching, in one place.</p>
-                <ul class="mt-8 space-y-4 text-lg text-brand-100">
-                    <li class="flex items-center gap-3"><x-icon name="materials" class="size-6 text-white" /> Teaching materials and assignments</li>
-                    <li class="flex items-center gap-3"><x-icon name="timetable" class="size-6 text-white" /> Your timetable and class lists</li>
-                    <li class="flex items-center gap-3"><x-icon name="sparkles" class="size-6 text-white" /> AI-assisted RPH preparation</li>
-                </ul>
-            </div>
+                <div class="hidden lg:mt-24 lg:block">
+                    <p class="max-w-lg text-5xl leading-[1.1] font-extrabold">Everything you need for teaching, in one warm place.</p>
+                    <p class="mt-8 text-sm font-bold text-orange-200">{{ config('schoolhub.school_name') }}</p>
+                </div>
+            </section>
 
-            <p class="hidden text-sm text-brand-200 lg:block">{{ config('schoolhub.school_name') }}</p>
-        </section>
-
-        <main class="flex flex-1 items-center justify-center px-4 py-10 sm:px-8">
-            <div class="w-full max-w-md">
+            <main class="w-full max-w-md justify-self-center lg:justify-self-end">
                 {{ $slot }}
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 
     <x-toasts />

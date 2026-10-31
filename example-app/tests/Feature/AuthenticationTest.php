@@ -5,7 +5,7 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
 
 test('the login page can be displayed', function () {
-    $this->get(route('login'))->assertOk()->assertSee('Log in to SchoolHub');
+    $this->get(route('login'))->assertOk()->assertSee('Log in to Pelita');
 });
 
 test('guests are redirected to the login page', function () {

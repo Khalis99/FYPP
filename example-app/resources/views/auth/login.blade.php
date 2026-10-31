@@ -1,6 +1,7 @@
 <x-layouts.guest title="Login">
     <div class="card p-6 sm:p-8">
-        <h1 class="text-2xl font-bold text-slate-900">Log in to SchoolHub</h1>
+        <p class="text-[15px] font-bold tracking-wide text-brand-600">Selamat datang, Cikgu!</p>
+        <h1 class="mt-1 text-2xl font-extrabold text-slate-900">Log in to Pelita</h1>
         <p class="mt-1 text-[16px] text-slate-600">Use the email and password given by your school administrator.</p>
 
         <form method="POST" action="{{ route('login.store') }}" class="mt-6 space-y-5" novalidate>

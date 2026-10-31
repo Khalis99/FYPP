@@ -1,7 +1,7 @@
 <x-layouts.app title="Dashboard">
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-slate-900 sm:text-3xl">Welcome back, {{ auth()->user()->name }}!</h2>
-        <p class="mt-1 text-[16px] text-slate-600">{{ now()->format('l, j F Y') }}</p>
+        <h2 class="text-2xl font-extrabold text-slate-900 sm:text-3xl"><x-greeting :user="auth()->user()" />!</h2>
+        <p class="mt-1 text-[16px] text-slate-600">{{ now()->format('l, j F Y') }} · Here is your teaching day at a glance.</p>
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -72,11 +72,11 @@
         </div>
 
         <div class="space-y-6">
-            <section class="rounded-lg bg-gradient-to-br from-brand-800 to-brand-500 p-6 text-white shadow-sm">
-                <x-icon name="sparkles" class="size-10" />
-                <h3 class="mt-3 text-xl font-bold">RPH Generator</h3>
-                <p class="mt-1 text-[15px] text-brand-100">Prepare a draft RPH from your lesson details in a few minutes. You review and edit it before saving.</p>
-                <a href="{{ route('teacher.rph.create') }}" class="btn mt-4 bg-white text-brand-800 hover:bg-brand-50">Generate RPH</a>
+            <section class="hero-card p-6">
+                <span class="halo lantern-glow pointer-events-none absolute -top-12 -right-12 size-56" aria-hidden="true"></span>
+                <h3 class="relative mt-3 text-xl font-extrabold">Let Pelita light your lesson plan</h3>
+                <p class="relative mt-1 text-[15px] text-orange-100">Prepare a draft RPH from your lesson details in a few minutes. You review and edit it before saving.</p>
+                <a href="{{ route('teacher.rph.create') }}" class="btn btn-light relative mt-4">Generate RPH</a>
             </section>
 
             <x-card :title="'Today\'s Schedule'">

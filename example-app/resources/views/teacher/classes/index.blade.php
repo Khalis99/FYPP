@@ -27,7 +27,7 @@
                             <h3 class="text-xl font-bold text-slate-900">{{ $load->schoolClass->name }}</h3>
                             <p class="text-[16px] font-medium text-brand-700">{{ $load->subject->name }}</p>
                         </div>
-                        <span class="rounded-lg bg-blue-50 p-2.5 text-blue-600"><x-icon name="classes" class="size-6" /></span>
+                        <span class="rounded-lg bg-teal-50 p-2.5 text-teal-700"><x-icon name="classes" class="size-6" /></span>
                     </div>
 
                     <dl class="mt-4 space-y-2 text-[15px]">

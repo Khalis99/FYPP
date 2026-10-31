@@ -32,11 +32,22 @@ test('the teacher dashboard shows statistics, schedule, assignments and announce
     $this->actingAs($teacher->user)
         ->get(route('teacher.dashboard'))
         ->assertOk()
-        ->assertSee('Welcome back, '.$teacher->user->name, false)
+        ->assertSee('Good morning, Cikgu', false)
         ->assertViewHas('stats', ['classes' => 1, 'materials' => 1, 'activeAssignments' => 1, 'pendingSubmissions' => 2])
         ->assertSee('Photosynthesis Worksheet')
         ->assertSee('Science Lab 1')
         ->assertSee('Staff Meeting This Friday');
+});
+
+test('the dashboard greets the teacher by first name and time of day', function () {
+    $teacher = teacherTeaching();
+    $teacher->user->update(['name' => 'Nur Aisyah binti Rahman']);
+
+    Carbon::setTestNow(Carbon::parse('2026-10-05 15:30'));
+    $this->actingAs($teacher->user)->get(route('teacher.dashboard'))->assertSee('Good afternoon, Cikgu Nur Aisyah!', false);
+
+    Carbon::setTestNow(Carbon::parse('2026-10-05 20:00'));
+    $this->actingAs($teacher->user)->get(route('teacher.dashboard'))->assertSee('Good evening, Cikgu Nur Aisyah!', false);
 });
 
 test('the dashboard shows a weekend message on Saturday and Sunday', function () {

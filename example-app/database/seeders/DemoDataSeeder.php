@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
- * Realistic demo data for presenting SchoolHub.
+ * Realistic demo data for presenting Pelita.
  *
  * Logins (password for all: "password"):
  *   admin@schoolhub.test  – Administrator
@@ -363,7 +363,7 @@ class DemoDataSeeder extends Seeder
         $escape = fn (string $text): string => str_replace(['\\', '(', ')'], ['\\\\', '\\(', '\\)'], $text);
         $stream = "BT /F1 20 Tf 60 770 Td ({$escape($title)}) Tj ET\n"
             ."BT /F1 12 Tf 60 740 Td ({$escape($body)}) Tj ET\n"
-            .'BT /F1 10 Tf 60 60 Td (SchoolHub demo file) Tj ET';
+            .'BT /F1 10 Tf 60 60 Td (Pelita demo file) Tj ET';
 
         $objects = [
             '<< /Type /Catalog /Pages 2 0 R >>',

@@ -4,35 +4,196 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --color-brand-50: #eef5fd;
-    --color-brand-100: #d6e7fa;
-    --color-brand-200: #aecff4;
-    --color-brand-500: #2a7de1;
-    --color-brand-600: #1b6ac9;
-    --color-brand-700: #1656a3;
-    --color-brand-800: #134781;
+    /*
+     * Pelita palette: warm lantern amber for actions and sandy, paper-like
+     * neutrals in place of the default cool slate. Every existing slate-*
+     * class picks up these tones, and the dark theme below flips them.
+     */
+    --color-brand-50: #fff8eb;
+    --color-brand-100: #fdebcb;
+    --color-brand-200: #f9d79b;
+    --color-brand-500: #d97706;
+    --color-brand-600: #b45309;
+    --color-brand-700: #92400e;
+    --color-brand-800: #78350f;
+
+    --color-glow: #fcd34d;
+
+    --color-slate-50: #fcf9f4;
+    --color-slate-100: #f8f2e9;
+    --color-slate-200: #eadfce;
+    --color-slate-300: #d9c9b2;
+    --color-slate-400: #a39179;
+    --color-slate-500: #75654f;
+    --color-slate-600: #5e4f40;
+    --color-slate-700: #4a3d31;
+    --color-slate-800: #352a21;
+    --color-slate-900: #241b14;
+
+    --shadow-card: 0 1px 3px rgb(146 64 14 / 0.08), 0 1px 2px rgb(146 64 14 / 0.05);
+    --shadow-lift: 0 22px 44px -20px rgb(146 64 14 / 0.38), 0 8px 16px -10px rgb(146 64 14 / 0.2);
 }
 
-/*
+/* ------------------------------------------------------------------ *
+ * Surfaces and the dark theme
+ * ------------------------------------------------------------------ */
+:root {
+    color-scheme: light;
+    --card-bg: rgb(255 255 255 / 0.82);
+    --card-border: rgb(226 211 190 / 0.85);
+    --solid-bg: #ffffff;
+    --panel-bg: rgb(255 252 247 / 0.8);
+    --field-bg: rgb(255 255 255 / 0.82);
+    --mesh-a: rgb(253 186 116 / 0.42);
+    --mesh-b: rgb(251 191 36 / 0.26);
+    --mesh-c: rgb(251 146 160 / 0.22);
+}
+
+/* Unlayered on purpose: these must beat the utility classes already used in the views. */
+html[data-theme='dark'] {
+    color-scheme: dark;
+    --card-bg: rgb(38 29 22 / 0.78);
+    --card-border: rgb(255 237 213 / 0.1);
+    --solid-bg: #231a13;
+    --panel-bg: rgb(30 22 17 / 0.8);
+    --field-bg: rgb(255 244 228 / 0.06);
+    --mesh-a: rgb(217 119 6 / 0.2);
+    --mesh-b: rgb(180 83 9 / 0.16);
+    --mesh-c: rgb(190 18 60 / 0.14);
+
+    --color-slate-50: #1c1511;
+    --color-slate-100: #140f0c;
+    --color-slate-200: #3a2e25;
+    --color-slate-300: #4f4034;
+    --color-slate-400: #8c7a65;
+    --color-slate-500: #b3a089;
+    --color-slate-600: #cdbca6;
+    --color-slate-700: #e0d2bd;
+    --color-slate-800: #efe4d2;
+    --color-slate-900: #faf3e6;
+
+    --color-brand-50: #3a2410;
+    --color-brand-100: #4d2f12;
+    --color-brand-200: #7a4a14;
+    --color-brand-500: #f59e0b;
+    --color-brand-600: #d1700a;
+    --color-brand-700: #fbbf24;
+    --color-brand-800: #fde68a;
+
+    --color-red-50: #3b1a1a;
+    --color-red-100: #4a1d1d;
+    --color-red-200: #6b2626;
+    --color-red-500: #f87171;
+    --color-red-600: #ef4444;
+    --color-red-700: #f87171;
+    --color-red-800: #fca5a5;
+
+    --color-green-50: #12301f;
+    --color-green-100: #153a22;
+    --color-green-200: #1f5a34;
+    --color-green-500: #22c55e;
+    --color-green-600: #4ade80;
+    --color-green-700: #86efac;
+    --color-green-800: #bbf7d0;
+
+    --color-amber-50: #35260f;
+    --color-amber-100: #43300f;
+    --color-amber-200: #6b4a12;
+    --color-amber-500: #f59e0b;
+    --color-amber-600: #fbbf24;
+    --color-amber-800: #fde68a;
+    --color-amber-900: #fef3c7;
+
+    --color-teal-50: #0f2e2b;
+    --color-teal-100: #123a36;
+    --color-teal-600: #2dd4bf;
+    --color-teal-700: #5eead4;
+    --color-teal-800: #99f6e4;
+
+    --color-purple-50: #2a1d3d;
+    --color-purple-100: #33224a;
+    --color-purple-600: #c084fc;
+    --color-purple-800: #e9d5ff;
+}
+
+html[data-theme='dark'] .bg-white {
+    background-color: var(--solid-bg);
+}
+
+html[data-theme='dark'] .btn-danger {
+    background-color: #b91c1c;
+}
+
+/* Ambient warm background that sits behind every page */
+body {
+    background-color: var(--color-slate-100);
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(60rem 40rem at 6% -10%, var(--mesh-a), transparent 60%),
+        radial-gradient(50rem 36rem at 100% 0%, var(--mesh-b), transparent 55%),
+        radial-gradient(46rem 40rem at 72% 112%, var(--mesh-c), transparent 60%);
+}
+
+::selection {
+    background: rgb(251 191 36 / 0.45);
+    color: inherit;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-slate-300) transparent;
+}
+
+dialog {
+    background-color: var(--solid-bg);
+    color: var(--color-slate-900);
+}
+
+/* ------------------------------------------------------------------ *
  * Reusable UI classes. Keeping these in one place means every page
- * uses the same button, input and table styles.
- */
+ * uses the same button, input, card and table styles.
+ * ------------------------------------------------------------------ */
 @layer components {
     .btn {
-        @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-[15px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+        @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-2.5 text-[15px] font-bold transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60;
     }
     /* Use together with .btn, e.g. class="btn btn-primary" */
     .btn-primary {
-        @apply bg-brand-600 text-white hover:bg-brand-700;
+        @apply text-white shadow-card hover:-translate-y-0.5 hover:shadow-lift;
+        background-image: linear-gradient(135deg, #c2620a 0%, #c2410c 55%, #be123c 100%);
+    }
+    .btn-primary::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.38) 50%, transparent 70%);
+        transform: translateX(-130%);
+        transition: transform 0.7s ease;
+    }
+    .btn-primary:hover::after {
+        transform: translateX(130%);
     }
     .btn-secondary {
-        @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50;
+        @apply border border-slate-300 text-slate-700 hover:-translate-y-0.5 hover:border-brand-200 hover:bg-brand-50 hover:text-brand-800;
+        background-color: var(--field-bg);
     }
     .btn-danger {
         @apply bg-red-600 text-white hover:bg-red-700;
+    }
+    .btn-light {
+        @apply bg-white text-brand-800 hover:-translate-y-0.5 hover:shadow-lift;
+        background-color: #fff;
+        color: #7c2d12;
     }
     .btn-sm {
         @apply px-3 py-1.5 text-sm;
@@ -45,10 +206,11 @@
     }
 
     .form-label {
-        @apply mb-1.5 block text-[15px] font-semibold text-slate-800;
+        @apply mb-1.5 block text-[15px] font-bold text-slate-800;
     }
     .form-input {
-        @apply block w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 shadow-xs placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none;
+        @apply block w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-base text-slate-900 shadow-xs transition duration-200 placeholder:text-slate-400 hover:border-brand-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-200/60 focus:outline-none;
+        background-color: var(--field-bg);
     }
     .form-input-error {
         @apply border-red-500 focus:border-red-500 focus:ring-red-100;
@@ -60,22 +222,310 @@
         @apply mt-1 text-sm font-medium text-red-600;
     }
 
+    /* Glowing glass card. The spotlight follows the cursor (see app.js). */
     .card {
-        @apply rounded-lg border border-slate-200 bg-white shadow-sm;
+        @apply relative rounded-2xl border shadow-card transition duration-300;
+        isolation: isolate;
+        border-color: var(--card-border);
+        background-color: var(--card-bg);
+        -webkit-backdrop-filter: blur(14px) saturate(1.15);
+        backdrop-filter: blur(14px) saturate(1.15);
+    }
+    .card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        background: radial-gradient(24rem circle at var(--mx, 50%) var(--my, 50%), rgb(251 191 36 / 0.18), transparent 45%);
+    }
+    .card:hover::before {
+        opacity: 1;
+    }
+    .card-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lift);
+        border-color: var(--color-brand-200);
+    }
+
+    /* Frosted floating panels: sidebar and top bar */
+    .glass-panel {
+        border: 1px solid var(--card-border);
+        background-color: var(--panel-bg);
+        -webkit-backdrop-filter: blur(18px) saturate(1.3);
+        backdrop-filter: blur(18px) saturate(1.3);
+        box-shadow: var(--shadow-card);
+    }
+    /* Solid pop-over menus (dropdowns) */
+    .menu-panel {
+        @apply rounded-2xl border border-slate-200 shadow-lift;
+        background-color: var(--solid-bg);
+        animation: pop 0.18s ease-out;
+        transform-origin: top right;
+    }
+
+    .icon-btn {
+        @apply relative rounded-full p-2 text-slate-600 transition duration-200 hover:bg-brand-50 hover:text-brand-700;
     }
 
     .data-table {
         @apply w-full min-w-[640px] text-left text-[15px];
     }
     .data-table th {
-        @apply border-b border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700;
+        @apply border-b border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-bold text-slate-700;
     }
     .data-table td {
         @apply border-b border-slate-100 px-4 py-3 align-top text-slate-800;
     }
-    .data-table tbody tr:hover {
-        @apply bg-slate-50/70;
+    .data-table tbody tr {
+        @apply transition-colors duration-150;
     }
+    .data-table tbody tr:hover {
+        @apply bg-brand-50/60;
+    }
+
+    /* Sidebar navigation */
+    .nav-link {
+        @apply relative mx-3 my-0.5 flex items-center gap-4 rounded-2xl px-4 py-3 text-[16px] font-semibold text-slate-700 transition duration-200 hover:translate-x-1 hover:bg-brand-50 hover:text-brand-800;
+    }
+    .nav-link .nav-icon {
+        @apply size-6 text-slate-500 transition duration-300;
+    }
+    .nav-link:hover .nav-icon {
+        @apply scale-110 -rotate-6 text-brand-600;
+    }
+    .nav-link[aria-current='page'] {
+        @apply font-extrabold text-brand-800;
+        background-image: linear-gradient(90deg, var(--color-brand-100), transparent 130%);
+    }
+    .nav-link[aria-current='page'] .nav-icon {
+        @apply text-brand-600;
+    }
+    .nav-link[aria-current='page']::before {
+        content: '';
+        position: absolute;
+        left: -0.75rem;
+        top: 22%;
+        bottom: 22%;
+        width: 4px;
+        border-radius: 0 4px 4px 0;
+        background: linear-gradient(#f59e0b, #e11d48);
+    }
+
+    .wordmark {
+        background-image: linear-gradient(90deg, #b45309, #e11d48);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Gradient call-to-action card on the dashboard */
+    .hero-card {
+        @apply relative overflow-hidden rounded-2xl text-white shadow-lift;
+        background-image: linear-gradient(135deg, #7c2d12 0%, #c2410c 50%, #be123c 100%);
+        background-size: 170% 170%;
+        animation: sheen 14s ease-in-out infinite alternate;
+    }
+
+    /* Command palette */
+    .palette-item {
+        @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-[15px] font-semibold text-slate-700 transition-colors;
+    }
+    .palette-item[data-active] {
+        @apply bg-brand-100 text-brand-800;
+    }
+    .palette-item[data-active] .palette-hint {
+        opacity: 1;
+    }
+    .palette-hint {
+        @apply ml-auto text-xs font-bold text-brand-700 opacity-0 transition-opacity;
+    }
+}
+
+/* ------------------------------------------------------------------ *
+ * Login aurora
+ * ------------------------------------------------------------------ */
+.aurora {
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(110% 90% at 0% 0%, #7c2d12 0%, transparent 55%),
+        radial-gradient(100% 90% at 100% 100%, #9f1239 0%, transparent 55%),
+        #1c1109;
+}
+.aurora::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(30rem circle at var(--ax, 70%) var(--ay, 30%), rgb(253 186 116 / 0.3), transparent 60%);
+}
+/* The login card sits on a busy background, so it is more opaque than other cards */
+.aurora .card {
+    --card-bg: rgb(255 252 247 / 0.94);
+}
+html[data-theme='dark'] .aurora .card {
+    --card-bg: rgb(36 27 21 / 0.9);
+}
+.blob {
+    position: absolute;
+    z-index: 0;
+    border-radius: 9999px;
+    filter: blur(70px);
+    opacity: 0.55;
+    pointer-events: none;
+    animation: drift 18s ease-in-out infinite alternate;
+}
+.ember {
+    position: absolute;
+    z-index: 1;
+    bottom: -12px;
+    left: var(--x);
+    width: var(--s);
+    height: var(--s);
+    border-radius: 9999px;
+    background: radial-gradient(circle, #fde68a 0%, #f59e0b 55%, transparent 72%);
+    opacity: 0;
+    pointer-events: none;
+    animation: ember var(--d) linear var(--delay) infinite;
+}
+.halo {
+    animation: halo 4s ease-in-out infinite;
+}
+
+/* Soft warm light behind the logo */
+.lantern-glow {
+    background: radial-gradient(circle closest-side at 50% 50%, rgb(252 211 77 / 0.5) 0%, rgb(252 211 77 / 0.16) 50%, transparent 100%);
+}
+
+/* ------------------------------------------------------------------ *
+ * Motion
+ * ------------------------------------------------------------------ */
+main > *,
+main .grid > * {
+    animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+main > *:nth-child(2),
+main .grid > *:nth-child(2) {
+    animation-delay: 0.06s;
+}
+main > *:nth-child(3),
+main .grid > *:nth-child(3) {
+    animation-delay: 0.12s;
+}
+main > *:nth-child(4),
+main .grid > *:nth-child(4) {
+    animation-delay: 0.18s;
+}
+main > *:nth-child(n + 5),
+main .grid > *:nth-child(n + 5) {
+    animation-delay: 0.24s;
+}
+
+[data-toast] {
+    animation: toast-in 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+}
+
+dialog[open] {
+    animation: pop 0.2s ease-out;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+}
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-4px);
+    }
+}
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.96);
+    }
+}
+@keyframes sheen {
+    to {
+        background-position: 100% 100%;
+    }
+}
+@keyframes drift {
+    to {
+        transform: translate3d(60px, -40px, 0) scale(1.15);
+    }
+}
+@keyframes ember {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.6);
+        opacity: 0;
+    }
+    12% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate3d(var(--dx, 24px), -105vh, 0) scale(1.1);
+        opacity: 0;
+    }
+}
+@keyframes halo {
+    0%,
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* ------------------------------------------------------------------ *
+ * Layout helpers
+ * ------------------------------------------------------------------ */
+#sidebar {
+    transform: translateX(-115%);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+#sidebar[data-open] {
+    transform: none;
+}
+@media (max-width: 1023px) {
+    #sidebar {
+        background-color: var(--solid-bg);
+    }
+}
+@media (min-width: 1024px) {
+    #sidebar {
+        transform: none;
+    }
+}
+
+.icon-sun {
+    display: none;
+}
+html[data-theme='dark'] .icon-sun {
+    display: block;
+}
+html[data-theme='dark'] .icon-moon {
+    display: none;
 }
 
 [x-cloak] {
@@ -83,11 +533,24 @@
 }
 
 dialog::backdrop {
-    background: rgb(15 23 42 / 0.45);
+    background: rgb(36 27 20 / 0.5);
+    backdrop-filter: blur(5px);
 }
 
 @media print {
     .no-print {
         display: none !important;
+    }
+    body::before {
+        display: none;
+    }
+    .card {
+        backdrop-filter: none;
+        box-shadow: none;
+        background: #fff;
+    }
+    main > *,
+    main .grid > * {
+        animation: none;
     }
 }

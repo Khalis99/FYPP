@@ -1,5 +1,5 @@
 <x-layouts.app title="Users">
-    <x-page-header title="Users" description="All accounts that can log in to SchoolHub.">
+    <x-page-header title="Users" description="All accounts that can log in to Pelita.">
         <x-slot:actions>
             <a href="{{ route('admin.teachers.create') }}" class="btn btn-secondary"><x-icon name="plus" /> New Teacher</a>
             <a href="{{ route('admin.users.create') }}" class="btn btn-primary"><x-icon name="plus" /> New Administrator</a>

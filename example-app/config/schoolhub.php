@@ -10,7 +10,7 @@ return [
 
     'school_name' => env('SCHOOL_NAME', 'SMK Seri Londang'),
 
-    'tagline' => 'Integrated Teaching Support System',
+    'tagline' => 'Lighting the way for teachers',
 
     /*
     |--------------------------------------------------------------------------

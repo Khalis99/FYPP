@@ -1,6 +1,6 @@
 <x-layouts.app title="Admin Dashboard">
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-slate-900 sm:text-3xl">Welcome, {{ auth()->user()->name }}</h2>
+        <h2 class="text-2xl font-extrabold text-slate-900 sm:text-3xl"><x-greeting :user="auth()->user()" /></h2>
         <p class="mt-1 text-[16px] text-slate-600">{{ config('schoolhub.school_name') }} · {{ now()->format('l, j F Y') }}</p>
     </div>
 

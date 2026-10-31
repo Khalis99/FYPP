@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $document->title }} · SchoolHub</title>
+    <title>{{ $document->title }} · Pelita</title>
     @vite(['resources/js/app.js'])
     @include('teacher.rph._document-styles')
     <style>

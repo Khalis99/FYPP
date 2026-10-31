@@ -26,6 +26,18 @@
             ['route' => 'teacher.rph.index', 'active' => ['teacher.rph.index', 'teacher.rph.show', 'teacher.rph.edit'], 'icon' => 'document', 'label' => 'My RPH'],
             ['route' => 'profile.show', 'active' => 'profile.*', 'icon' => 'profile', 'label' => 'Profile'],
         ];
+
+    $quickActions = $user->isAdmin()
+        ? [
+            ['route' => 'admin.classes.create', 'icon' => 'plus', 'label' => 'New class'],
+            ['route' => 'admin.users.create', 'icon' => 'plus', 'label' => 'New user'],
+            ['route' => 'admin.announcements.create', 'icon' => 'announcements', 'label' => 'New announcement'],
+        ]
+        : [
+            ['route' => 'teacher.rph.create', 'icon' => 'sparkles', 'label' => 'Generate RPH'],
+            ['route' => 'teacher.materials.create', 'icon' => 'upload', 'label' => 'Upload material'],
+            ['route' => 'teacher.assignments.create', 'icon' => 'plus', 'label' => 'Create assignment'],
+        ];
 @endphp
 
 <!DOCTYPE html>
@@ -34,24 +46,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ? $title.' · ' : '' }}SchoolHub</title>
+    <title>{{ $title ? $title.' · ' : '' }}Pelita</title>
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    <script>
+        try { document.documentElement.dataset.theme = localStorage.getItem('pelita-theme') || 'light'; } catch (e) {}
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-slate-100 font-sans text-base text-slate-900 antialiased">
+<body class="min-h-screen font-sans text-base text-slate-900 antialiased">
     {{-- Mobile backdrop --}}
-    <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-slate-900/40 lg:hidden" data-sidebar-toggle></div>
+    <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/40 backdrop-blur-sm lg:hidden" data-sidebar-toggle></div>
 
-    {{-- Sidebar --}}
-    <aside id="sidebar" class="no-print fixed inset-y-0 left-0 z-40 flex w-68 -translate-x-full flex-col border-r border-slate-200 bg-white transition-transform lg:translate-x-0">
-        <a href="{{ route($user->role->homeRoute()) }}" class="flex items-center gap-3 bg-brand-600 px-5 py-4 text-white">
-            <x-icon name="classes" class="size-8" />
+    {{-- Floating glass sidebar --}}
+    <aside id="sidebar" class="glass-panel no-print fixed inset-y-3 left-3 z-40 flex w-68 flex-col rounded-3xl">
+        <a href="{{ route($user->role->homeRoute()) }}" class="group flex items-center gap-3 px-5 pt-5 pb-4">
             <span class="leading-tight">
-                <span class="block text-lg font-bold tracking-wide">SchoolHub</span>
-                <span class="block text-xs font-medium text-brand-100">{{ $user->isAdmin() ? 'Admin Portal' : 'Teacher Portal' }}</span>
+                <span class="wordmark block text-2xl font-extrabold tracking-wide">Pelita</span>
+                <span class="mt-0.5 inline-block rounded-full bg-brand-100 px-2 py-0.5 text-xs font-bold text-brand-800">{{ $user->isAdmin() ? 'Admin Portal' : 'Teacher Portal' }}</span>
             </span>
         </a>
 
-        <nav class="flex-1 overflow-y-auto py-3" aria-label="Main navigation">
+        <nav class="flex-1 overflow-y-auto py-2" aria-label="Main navigation">
             @foreach ($navigation as $item)
                 <x-sidebar-link :href="route($item['route'])" :active="request()->routeIs(...(array) $item['active'])" :icon="$item['icon']">
                     {{ $item['label'] }}
@@ -61,41 +76,55 @@
 
         <form method="POST" action="{{ route('logout') }}" class="border-t border-slate-200 p-3">
             @csrf
-            <button type="submit" class="flex w-full items-center gap-4 rounded-md px-4 py-3 text-left text-[16px] text-slate-700 hover:bg-slate-100">
-                <x-icon name="logout" class="size-6 text-slate-500" />
+            <button type="submit" class="group flex w-full items-center gap-4 rounded-2xl px-4 py-3 text-left text-[16px] font-semibold text-slate-700 transition duration-200 hover:bg-red-50 hover:text-red-700">
+                <x-icon name="logout" class="size-6 text-slate-500 transition duration-300 group-hover:translate-x-0.5 group-hover:text-red-600" />
                 Logout
             </button>
         </form>
     </aside>
 
-    <div class="lg:pl-68">
-        {{-- Top bar --}}
-        <header class="no-print sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-slate-200 bg-white px-4 sm:px-6">
-            <button type="button" class="rounded-md p-2 text-slate-600 hover:bg-slate-100 lg:hidden" data-sidebar-toggle aria-label="Open menu">
+    <div class="lg:pl-[18.5rem]">
+        {{-- Floating top bar --}}
+        <header class="glass-panel no-print sticky top-3 z-20 mx-3 mt-3 flex h-16 items-center gap-2 rounded-2xl px-3 sm:mx-5 sm:px-4 lg:mx-8">
+            <button type="button" class="icon-btn lg:hidden" data-sidebar-toggle aria-label="Open menu">
                 <x-icon name="menu" class="size-6" />
             </button>
 
-            <h1 class="truncate text-lg font-semibold text-slate-800">{{ $title }}</h1>
+            <h1 class="truncate text-lg font-extrabold text-slate-800">{{ $title }}</h1>
 
-            <div class="ml-auto flex items-center gap-2 sm:gap-4">
+            <div class="ml-auto flex items-center gap-1 sm:gap-2">
+                <button type="button" data-palette-open class="hidden items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-sm font-semibold text-slate-500 transition duration-200 hover:border-brand-200 hover:text-brand-700 md:flex" aria-label="Search pages and actions">
+                    <x-icon name="search" class="size-4" />
+                    <span>Jump to…</span>
+                    <kbd class="rounded-md border border-slate-300 px-1.5 text-xs font-bold">Ctrl K</kbd>
+                </button>
+                <button type="button" data-palette-open class="icon-btn md:hidden" aria-label="Search pages and actions">
+                    <x-icon name="search" class="size-6" />
+                </button>
+
+                <button type="button" data-theme-toggle class="icon-btn" aria-label="Switch between light and dark mode">
+                    <x-icon name="moon" class="icon-moon size-6" />
+                    <x-icon name="sun" class="icon-sun size-6" />
+                </button>
+
                 <x-notification-bell :user="$user" />
 
                 <div class="relative" data-dropdown>
-                    <button type="button" class="flex items-center gap-2 rounded-full py-1 pr-2 pl-1 hover:bg-slate-100" data-dropdown-trigger aria-expanded="false" aria-haspopup="true">
-                        <x-avatar :user="$user" class="size-9 text-sm" />
+                    <button type="button" class="flex items-center gap-2 rounded-full py-1 pr-2 pl-1 transition duration-200 hover:bg-brand-50" data-dropdown-trigger aria-expanded="false" aria-haspopup="true">
+                        <x-avatar :user="$user" class="size-9 text-sm ring-2 ring-brand-200" />
                         <span class="hidden text-left leading-tight sm:block">
-                            <span class="block text-sm font-semibold text-slate-800">{{ $user->name }}</span>
+                            <span class="block text-sm font-bold text-slate-800">{{ $user->name }}</span>
                             <span class="block text-xs text-slate-500">{{ $user->role->label() }}</span>
                         </span>
                         <x-icon name="chevron-down" class="hidden size-4 text-slate-500 sm:block" />
                     </button>
-                    <div class="absolute right-0 mt-2 hidden w-52 overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg" data-dropdown-menu>
-                        <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-3 text-[15px] hover:bg-slate-50">
+                    <div class="menu-panel absolute right-0 mt-2 hidden w-52 overflow-hidden" data-dropdown-menu>
+                        <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-3 text-[15px] font-semibold hover:bg-brand-50">
                             <x-icon name="profile" class="text-slate-500" /> My Profile
                         </a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="flex w-full items-center gap-3 border-t border-slate-100 px-4 py-3 text-left text-[15px] hover:bg-slate-50">
+                            <button type="submit" class="flex w-full items-center gap-3 border-t border-slate-100 px-4 py-3 text-left text-[15px] font-semibold hover:bg-brand-50">
                                 <x-icon name="logout" class="text-slate-500" /> Logout
                             </button>
                         </form>
@@ -109,6 +138,7 @@
         </main>
     </div>
 
+    <x-command-palette :pages="$navigation" :actions="$quickActions" />
     <x-toasts />
     <x-confirm-dialog />
 </body>
