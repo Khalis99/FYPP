@@ -57,7 +57,6 @@
                 <button type="submit" class="btn btn-primary px-6 py-3 text-base" data-loading-text="Generating your RPH… please wait">
                     <x-icon name="sparkles" /> Generate RPH
                 </button>
-                <p class="text-sm text-slate-500">This usually takes less than a minute.</p>
             </div>
         </form>
     @endif
