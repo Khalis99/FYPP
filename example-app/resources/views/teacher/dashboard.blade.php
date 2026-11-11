@@ -75,7 +75,7 @@
             <section class="hero-card p-6">
                 <span class="halo lantern-glow pointer-events-none absolute -top-12 -right-12 size-56" aria-hidden="true"></span>
                 <h3 class="relative mt-3 text-xl font-extrabold">Let Pelita light your lesson plan</h3>
-                <p class="relative mt-1 text-[15px] text-orange-100">Prepare a draft RPH from your lesson details in a few minutes. You review and edit it before saving.</p>
+                <p class="relative mt-1 text-[15px] text-orange-100">Prepare a draft RPH from your lesson details in a few minutes.</p>
                 <a href="{{ route('teacher.rph.create') }}" class="btn btn-light relative mt-4">Generate RPH</a>
             </section>
 
