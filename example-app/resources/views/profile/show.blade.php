@@ -5,16 +5,22 @@
         </x-slot:actions>
     </x-page-header>
 
-    <div class="grid gap-6 lg:grid-cols-3">
+    <div class="grid items-start gap-6 lg:grid-cols-3">
         <x-card class="lg:col-span-2">
-            <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
-                <x-avatar :user="$user" class="size-28 text-3xl" />
+            <div>
+                <div class="flex flex-col items-center gap-5 border-b border-slate-200 pb-6 text-center sm:flex-row sm:text-left">
+                    <x-avatar :user="$user" class="size-24 text-3xl ring-4 ring-brand-100" />
 
-                <dl class="grid flex-1 gap-x-6 gap-y-4 sm:grid-cols-2">
                     <div>
-                        <dt class="text-sm text-slate-500">Full name</dt>
-                        <dd class="text-[17px] font-semibold">{{ $user->name }}</dd>
+                        <p class="text-2xl font-extrabold text-slate-900">{{ $user->name }}</p>
+                        <p class="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-start">
+                            <x-badge :color="$user->isAdmin() ? 'purple' : 'blue'">{{ $user->role->label() }}</x-badge>
+                            <span class="text-[15px] text-slate-600">Staff ID <span class="font-bold tracking-wider text-slate-900">{{ $user->staff_id }}</span></span>
+                        </p>
                     </div>
+                </div>
+
+                <dl class="grid gap-x-8 gap-y-6 pt-6 sm:grid-cols-2">
                     <div>
                         <dt class="text-sm text-slate-500">Email</dt>
                         <dd class="text-[17px] break-all">{{ $user->email }}</dd>
@@ -23,15 +29,7 @@
                         <dt class="text-sm text-slate-500">Phone number</dt>
                         <dd class="text-[17px]">{{ $user->phone ?: '—' }}</dd>
                     </div>
-                    <div>
-                        <dt class="text-sm text-slate-500">Role</dt>
-                        <dd class="text-[17px]">{{ $user->role->label() }}</dd>
-                    </div>
                     @if ($user->teacher)
-                        <div>
-                            <dt class="text-sm text-slate-500">Teacher ID</dt>
-                            <dd class="text-[17px]">{{ $user->teacher->teacher_code }}</dd>
-                        </div>
                         <div>
                             <dt class="text-sm text-slate-500">Department</dt>
                             <dd class="text-[17px]">{{ $user->teacher->department ?: '—' }}</dd>
@@ -49,13 +47,6 @@
                     @endif
                 </dl>
             </div>
-
-            @if ($user->teacher)
-                <p class="mt-6 flex items-start gap-2 rounded-md bg-slate-50 p-3 text-sm text-slate-600">
-                    <x-icon name="info" class="mt-0.5 size-4" />
-                    Teacher ID, department and subjects are managed by the school administrator.
-                </p>
-            @endif
         </x-card>
 
         <x-card title="Change Password">
@@ -75,30 +66,8 @@
                 @endforeach
 
                 <p class="form-hint">At least 8 characters, with letters and numbers.</p>
-                <button type="submit" class="btn btn-primary w-full"><x-icon name="key" /> Change Password</button>
+                <button type="submit" class="btn btn-primary w-full">Change Password</button>
             </form>
-        </x-card>
-
-        <x-card title="Language" class="lg:col-span-2">
-            <p class="text-[15px] text-slate-600">Choose the language Pelita uses for you. It is saved to your account, so it stays the same on any device.</p>
-
-            <div class="mt-4 flex flex-wrap gap-3">
-                @foreach (config('schoolhub.locales') as $code => $name)
-                    <form method="POST" action="{{ route('locale.update', $code) }}">
-                        @csrf
-                        <button type="submit" aria-pressed="{{ app()->getLocale() === $code ? 'true' : 'false' }}" @class([
-                            'btn min-w-44',
-                            'btn-primary' => app()->getLocale() === $code,
-                            'btn-secondary' => app()->getLocale() !== $code,
-                        ])>
-                            @if (app()->getLocale() === $code)
-                                <x-icon name="check" class="size-5" />
-                            @endif
-                            {{ $name }}
-                        </button>
-                    </form>
-                @endforeach
-            </div>
         </x-card>
     </div>
 </x-layouts.app>

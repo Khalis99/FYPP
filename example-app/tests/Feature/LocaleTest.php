@@ -75,8 +75,8 @@ test('the teacher portal appears in Bahasa Melayu with Malay dates', function ()
 test('form errors appear in Bahasa Melayu', function () {
     $this->withSession(['locale' => 'ms'])
         ->from(route('login'))
-        ->post(route('login.store'), ['email' => '', 'password' => ''])
-        ->assertSessionHasErrors(['email' => 'Sila masukkan alamat e-mel anda.']);
+        ->post(route('login.store'), ['staff_id' => '', 'password' => ''])
+        ->assertSessionHasErrors(['staff_id' => 'Sila masukkan ID staf anda.']);
 });
 
 test('every piece of interface text has a Bahasa Melayu translation', function () {
@@ -127,19 +127,17 @@ test('the saved account language wins over a different cookie', function () {
         ->assertDontSee('My Profile');
 });
 
-test('the profile page lets the user pick a language', function () {
+test('signed-in pages offer the language switch in the top bar', function () {
     $user = teacherTeaching()->user;
 
     $this->actingAs($user)->get(route('profile.show'))
         ->assertOk()
-        ->assertSee('Choose the language Pelita uses for you.')
-        ->assertSee('English')
-        ->assertSee('Bahasa Melayu')
+        ->assertSee('data-language-switch', false)
         ->assertSee(route('locale.update', 'ms'), false);
 
     $user->update(['locale' => 'ms']);
 
     $this->actingAs($user->fresh())->get(route('profile.show'))
-        ->assertSee('Pilih bahasa yang digunakan Pelita untuk anda.')
-        ->assertSee('aria-pressed="true"', false);
+        ->assertSee(route('locale.update', 'en'), false)
+        ->assertSee('aria-checked="true"', false);
 });

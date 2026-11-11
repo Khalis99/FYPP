@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
-#[Fillable(['user_id', 'teacher_code', 'department'])]
+#[Fillable(['user_id', 'department'])]
 class Teacher extends Model
 {
     /** @use HasFactory<TeacherFactory> */

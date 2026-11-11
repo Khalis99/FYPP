@@ -2,12 +2,12 @@
     <div class="card p-6 sm:p-8">
         <p class="text-[15px] font-bold tracking-wide text-brand-600">Selamat datang, Cikgu!</p>
         <h1 class="mt-1 text-2xl font-extrabold text-slate-900">Log in to Pelita</h1>
-        <p class="mt-1 text-[16px] text-slate-600">Use the email and password given by your school administrator.</p>
+        <p class="mt-1 text-[16px] text-slate-600">Use the staff ID and password given by your school administrator.</p>
 
         <form method="POST" action="{{ route('login.store') }}" class="mt-6 space-y-5" novalidate>
             @csrf
 
-            <x-form.input name="email" type="email" label="Email address" autocomplete="username" autofocus required />
+            <x-form.input name="staff_id" label="Staff ID" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="e.g. 260001" autocomplete="username" autofocus required />
             <x-form.input name="password" type="password" label="Password" autocomplete="current-password" required />
 
             <div class="flex flex-wrap items-center justify-between gap-3">

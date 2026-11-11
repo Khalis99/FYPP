@@ -1,5 +1,5 @@
 <x-layouts.app :title="$teacher->user->name">
-    <x-page-header :title="$teacher->user->name" :description="__('Teacher ID :code', ['code' => $teacher->teacher_code])" :back="route('admin.teachers.index')">
+    <x-page-header :title="$teacher->user->name" :description="__('Staff ID :code', ['code' => $teacher->user->staff_id])" :back="route('admin.teachers.index')">
         <x-slot:actions>
             <a href="{{ route('admin.teachers.edit', $teacher) }}" class="btn btn-primary"><x-icon name="edit" /> Edit</a>
             <a href="{{ route('admin.timetable.create', ['teacher_id' => $teacher->id]) }}" class="btn btn-secondary"><x-icon name="timetable" /> Add Timetable Entry</a>

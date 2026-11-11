@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'staff_id' => ['required', 'string', 'regex:/^\d{6}$/'],
             'password' => ['required', 'string'],
         ];
     }
@@ -39,14 +39,14 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => __('Please enter your email address.'),
-            'email.email' => __('Please enter a valid email address, for example name@school.edu.my.'),
+            'staff_id.required' => __('Please enter your staff ID.'),
+            'staff_id.regex' => __('Your staff ID is 6 digits, for example 260001.'),
             'password.required' => __('Please enter your password.'),
         ];
     }
 
     /**
-     * Attempt to sign in, allowing 5 attempts per minute per email + IP.
+     * Attempt to sign in, allowing 5 attempts per minute per staff ID + IP.
      *
      * @throws ValidationException
      */
@@ -54,11 +54,11 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('staff_id', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('The email or password you entered is incorrect.'),
+                'staff_id' => __('The staff ID or password you entered is incorrect.'),
             ]);
         }
 
@@ -66,7 +66,7 @@ class LoginRequest extends FormRequest
             Auth::logout();
 
             throw ValidationException::withMessages([
-                'email' => __('Your account has been deactivated. Please contact the school administrator.'),
+                'staff_id' => __('Your account has been deactivated. Please contact the school administrator.'),
             ]);
         }
 
@@ -87,12 +87,12 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => __('Too many login attempts. Please try again in :seconds seconds.', ['seconds' => $seconds]),
+            'staff_id' => __('Too many login attempts. Please try again in :seconds seconds.', ['seconds' => $seconds]),
         ]);
     }
 
     private function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('staff_id')).'|'.$this->ip());
     }
 }

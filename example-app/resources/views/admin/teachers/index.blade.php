@@ -19,12 +19,12 @@
 
     <x-card :padding="false">
         <x-table>
-            <thead><tr><th>Name</th><th>Teacher ID</th><th>Email</th><th>Department</th><th>Status</th><th class="text-right">Actions</th></tr></thead>
+            <thead><tr><th>Name</th><th>Staff ID</th><th>Email</th><th>Department</th><th>Status</th><th class="text-right">Actions</th></tr></thead>
             <tbody>
                 @forelse ($teachers as $teacher)
                     <tr>
                         <td class="font-medium"><span class="flex items-center gap-3"><x-avatar :user="$teacher->user" class="size-8 text-xs" /> {{ $teacher->user->name }}</span></td>
-                        <td>{{ $teacher->teacher_code }}</td>
+                        <td>{{ $teacher->user->staff_id }}</td>
                         <td class="break-all">{{ $teacher->user->email }}</td>
                         <td>{{ $teacher->department ?: '—' }}</td>
                         <td><x-active-badge :active="$teacher->user->is_active" /></td>

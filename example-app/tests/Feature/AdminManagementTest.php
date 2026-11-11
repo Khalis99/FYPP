@@ -16,21 +16,21 @@ test('an admin can create a teacher account with a teacher profile', function ()
             'phone' => '012-3456789',
             'password' => 'secret123',
             'password_confirmation' => 'secret123',
-            'teacher_code' => 'TCH9001',
+            'staff_id' => '269001',
             'department' => 'Science',
         ])
         ->assertRedirect();
 
-    $teacher = Teacher::where('teacher_code', 'TCH9001')->sole();
+    $teacher = User::where('staff_id', '269001')->sole()->teacher;
 
     expect($teacher->user->email)->toBe('aisyah@school.test')
         ->and($teacher->user->role)->toBe(UserRole::Teacher);
 
     $this->post(route('logout'));
-    $this->post(route('login.store'), ['email' => 'aisyah@school.test', 'password' => 'secret123'])->assertRedirect(route('teacher.dashboard'));
+    $this->post(route('login.store'), ['staff_id' => '269001', 'password' => 'secret123'])->assertRedirect(route('teacher.dashboard'));
 });
 
-test('teacher creation validates unique email and teacher ID', function () {
+test('teacher creation validates unique email and staff ID', function () {
     $existing = teacherTeaching();
 
     $this->actingAs(adminUser())
@@ -39,9 +39,9 @@ test('teacher creation validates unique email and teacher ID', function () {
             'email' => $existing->user->email,
             'password' => 'secret123',
             'password_confirmation' => 'secret123',
-            'teacher_code' => $existing->teacher_code,
+            'staff_id' => $existing->user->staff_id,
         ])
-        ->assertSessionHasErrors(['email', 'teacher_code']);
+        ->assertSessionHasErrors(['email', 'staff_id']);
 });
 
 test('an admin can deactivate and reactivate a teacher', function () {
@@ -67,12 +67,13 @@ test('an admin can create another administrator account', function () {
         ->post(route('admin.users.store'), [
             'name' => 'Second Admin',
             'email' => 'admin2@school.test',
+            'staff_id' => '900002',
             'password' => 'secret123',
             'password_confirmation' => 'secret123',
         ])
         ->assertRedirect(route('admin.users.index'));
 
-    expect(User::where('email', 'admin2@school.test')->sole()->isAdmin())->toBeTrue();
+    expect(User::where('staff_id', '900002')->sole()->isAdmin())->toBeTrue();
 });
 
 test('an admin can create a class and assign a teacher at the same time', function () {

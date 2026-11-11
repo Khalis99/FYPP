@@ -24,7 +24,8 @@ class UserController extends Controller
         $users = User::query()
             ->when($filters['search'] ?? null, fn (Builder $q, string $search) => $q->where(fn (Builder $inner) => $inner
                 ->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")))
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('staff_id', 'like', "%{$search}%")))
             ->when($filters['role'] ?? null, fn (Builder $q, string $role) => $q->where('role', $role))
             ->when(($filters['status'] ?? null) === 'active', fn (Builder $q) => $q->where('is_active', true))
             ->when(($filters['status'] ?? null) === 'inactive', fn (Builder $q) => $q->where('is_active', false))
@@ -41,7 +42,10 @@ class UserController extends Controller
 
     public function create(): View
     {
-        return view('admin.users.create', ['user' => new User]);
+        return view('admin.users.create', [
+            'user' => new User,
+            'suggestedStaffId' => User::nextStaffId(UserRole::Admin),
+        ]);
     }
 
     public function store(UserRequest $request): RedirectResponse

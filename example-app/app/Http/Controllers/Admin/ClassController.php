@@ -130,7 +130,7 @@ class ClassController extends Controller
                 ->get()
                 ->filter(fn (Teacher $teacher) => $teacher->user->is_active)
                 ->sortBy('user.name')
-                ->mapWithKeys(fn (Teacher $teacher) => [$teacher->id => $teacher->user->name.' ('.$teacher->teacher_code.')'])
+                ->mapWithKeys(fn (Teacher $teacher) => [$teacher->id => $teacher->user->name.' ('.$teacher->user->staff_id.')'])
                 ->all(),
         ];
     }

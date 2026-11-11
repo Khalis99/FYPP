@@ -10,7 +10,7 @@ test('a teacher can view their profile with teacher details and subjects', funct
     $this->actingAs($teacher->user)
         ->get(route('profile.show'))
         ->assertOk()
-        ->assertSee($teacher->teacher_code)
+        ->assertSee($teacher->user->staff_id)
         ->assertSee($teacher->teachingLoads()->first()->subject->name);
 });
 

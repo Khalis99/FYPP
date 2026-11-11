@@ -26,7 +26,7 @@ class TeacherController extends Controller
             ->when($filters['search'] ?? null, fn (Builder $q, string $search) => $q->where(fn (Builder $inner) => $inner
                 ->where('users.name', 'like', "%{$search}%")
                 ->orWhere('users.email', 'like', "%{$search}%")
-                ->orWhere('teachers.teacher_code', 'like', "%{$search}%")))
+                ->orWhere('users.staff_id', 'like', "%{$search}%")))
             ->when($filters['department'] ?? null, fn (Builder $q, string $department) => $q->where('teachers.department', $department))
             ->when(($filters['status'] ?? null) === 'active', fn (Builder $q) => $q->where('users.is_active', true))
             ->when(($filters['status'] ?? null) === 'inactive', fn (Builder $q) => $q->where('users.is_active', false))
@@ -43,7 +43,11 @@ class TeacherController extends Controller
 
     public function create(): View
     {
-        return view('admin.teachers.create', ['teacher' => new Teacher, 'user' => new User]);
+        return view('admin.teachers.create', [
+            'teacher' => new Teacher,
+            'user' => new User,
+            'suggestedStaffId' => User::nextStaffId(UserRole::Teacher),
+        ]);
     }
 
     public function store(TeacherRequest $request): RedirectResponse
@@ -51,7 +55,7 @@ class TeacherController extends Controller
         $teacher = DB::transaction(function () use ($request): Teacher {
             $user = User::create([...$request->accountData(), 'role' => UserRole::Teacher]);
 
-            return $user->teacher()->create($request->safe()->only(['teacher_code', 'department']));
+            return $user->teacher()->create($request->safe()->only(['department']));
         });
 
         return redirect()->route('admin.teachers.show', $teacher)->with('success', __('Teacher account created. You can now assign classes from the Classes page.'));
@@ -80,7 +84,7 @@ class TeacherController extends Controller
     {
         DB::transaction(function () use ($request, $teacher): void {
             $teacher->user->update($request->accountData());
-            $teacher->update($request->safe()->only(['teacher_code', 'department']));
+            $teacher->update($request->safe()->only(['department']));
         });
 
         return redirect()->route('admin.teachers.show', $teacher)->with('success', __('Teacher details updated.'));

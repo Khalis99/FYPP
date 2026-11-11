@@ -44,6 +44,7 @@ class DemoDataSeeder extends Seeder
         $admin = User::create([
             'name' => 'Pn. Rosnah Abdullah',
             'email' => 'admin@schoolhub.test',
+            'staff_id' => '900001',
             'password' => 'password',
             'role' => UserRole::Admin,
             'phone' => '03-87654321',
@@ -58,20 +59,21 @@ class DemoDataSeeder extends Seeder
         ])->mapWithKeys(fn (array $subject) => [$subject['name'] => Subject::create($subject)]);
 
         $teachers = collect([
-            ['key' => 'aisyah', 'name' => 'Nur Aisyah binti Rahman', 'email' => 'aisyah@schoolhub.test', 'code' => 'TCH0001', 'department' => 'Science & Mathematics', 'subject' => 'Science'],
-            ['key' => 'hakim', 'name' => 'Ahmad Hakim bin Ismail', 'email' => 'hakim@schoolhub.test', 'code' => 'TCH0002', 'department' => 'Science & Mathematics', 'subject' => 'Mathematics'],
-            ['key' => 'mariam', 'name' => 'Siti Mariam binti Yusof', 'email' => 'mariam@schoolhub.test', 'code' => 'TCH0003', 'department' => 'Languages', 'subject' => 'English'],
-            ['key' => 'faridah', 'name' => 'Faridah binti Hassan', 'email' => 'faridah@schoolhub.test', 'code' => 'TCH0004', 'department' => 'Languages', 'subject' => 'Bahasa Melayu'],
+            ['key' => 'aisyah', 'name' => 'Nur Aisyah binti Rahman', 'email' => 'aisyah@schoolhub.test', 'staff_id' => '260001', 'department' => 'Science & Mathematics', 'subject' => 'Science'],
+            ['key' => 'hakim', 'name' => 'Ahmad Hakim bin Ismail', 'email' => 'hakim@schoolhub.test', 'staff_id' => '260002', 'department' => 'Science & Mathematics', 'subject' => 'Mathematics'],
+            ['key' => 'mariam', 'name' => 'Siti Mariam binti Yusof', 'email' => 'mariam@schoolhub.test', 'staff_id' => '260003', 'department' => 'Languages', 'subject' => 'English'],
+            ['key' => 'faridah', 'name' => 'Faridah binti Hassan', 'email' => 'faridah@schoolhub.test', 'staff_id' => '260004', 'department' => 'Languages', 'subject' => 'Bahasa Melayu'],
         ])->mapWithKeys(function (array $data) {
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'staff_id' => $data['staff_id'],
                 'password' => 'password',
                 'role' => UserRole::Teacher,
                 'phone' => '01'.random_int(2, 9).'-'.random_int(1000000, 9999999),
             ]);
 
-            $teacher = $user->teacher()->create(['teacher_code' => $data['code'], 'department' => $data['department']]);
+            $teacher = $user->teacher()->create(['department' => $data['department']]);
             $teacher->setAttribute('main_subject', $data['subject']);
 
             return [$data['key'] => $teacher];
@@ -255,10 +257,10 @@ class DemoDataSeeder extends Seeder
     private function seedAnnouncements(User $admin)
     {
         $items = [
-            ['Staff Meeting This Friday', "All teachers are reminded to attend the staff meeting this Friday at 2:30 PM in the Bilik Mesyuarat.\n\nAgenda:\n1. Final year examination preparations\n2. PBD data submission\n3. Co-curricular activities", AnnouncementAudience::Teachers, 1],
-            ['PBD Data Submission Deadline', 'Please make sure all Pentaksiran Bilik Darjah (PBD) records for Term 2 are updated before 31 October 2026. Contact the Assessment Unit if you need help.', AnnouncementAudience::Teachers, 3],
-            ['School Sports Day 2026', 'Sports Day will be held on 15 November 2026 at the school field. Classes will end at 11:00 AM on the day before for preparation.', AnnouncementAudience::All, 6],
-            ['Final Year Examination Timetable Released', 'The final year examination timetable for Form 1 and Form 2 has been released. Please inform your students and remind them to start revising.', AnnouncementAudience::All, 9],
+            ['Mesyuarat Staf Hari Jumaat Ini', "Semua guru diingatkan untuk menghadiri mesyuarat staf pada hari Jumaat ini jam 2:30 petang di Bilik Mesyuarat.\n\nAgenda:\n1. Persediaan peperiksaan akhir tahun\n2. Penghantaran data PBD\n3. Aktiviti kokurikulum", AnnouncementAudience::Teachers, 1],
+            ['Tarikh Akhir Penghantaran Data PBD', 'Sila pastikan semua rekod Pentaksiran Bilik Darjah (PBD) bagi Penggal 2 dikemas kini sebelum 31 Oktober 2026. Hubungi Unit Pentaksiran jika anda memerlukan bantuan.', AnnouncementAudience::Teachers, 3],
+            ['Hari Sukan Sekolah 2026', 'Hari Sukan akan diadakan pada 15 November 2026 di padang sekolah. Kelas akan tamat pada pukul 11:00 pagi pada hari sebelumnya untuk persediaan.', AnnouncementAudience::All, 6],
+            ['Jadual Peperiksaan Akhir Tahun Diumumkan', 'Jadual peperiksaan akhir tahun bagi Tingkatan 1 dan Tingkatan 2 telah diumumkan. Sila maklumkan kepada murid anda dan ingatkan mereka untuk mula mengulang kaji.', AnnouncementAudience::All, 9],
         ];
 
         $announcements = collect($items)->map(fn (array $item) => Announcement::create([
@@ -272,8 +274,8 @@ class DemoDataSeeder extends Seeder
 
         Announcement::create([
             'user_id' => $admin->id,
-            'title' => 'Parent-Teacher Day Preparations',
-            'body' => 'Draft: details about Hari Bertemu Pelanggan will be shared soon.',
+            'title' => 'Persediaan Hari Bertemu Pelanggan',
+            'body' => 'Draf: butiran mengenai Hari Bertemu Pelanggan akan dikongsi tidak lama lagi.',
             'audience' => AnnouncementAudience::Teachers,
             'status' => AnnouncementStatus::Draft,
         ]);

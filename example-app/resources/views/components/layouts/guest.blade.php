@@ -31,13 +31,13 @@
             <section class="text-white">
                 <div class="flex items-center gap-3">
                     <div class="leading-tight">
-                        <p class="text-2xl font-extrabold tracking-wide">Pelita</p>
-                        <p class="text-sm font-semibold text-orange-100">{{ __(config('schoolhub.tagline')) }}</p>
+                        <p class="text-6xl font-extrabold tracking-wide sm:text-7xl">Pelita</p>
+                        <p class="mt-1 text-base font-semibold text-orange-100 sm:text-lg">{{ __(config('schoolhub.tagline')) }}</p>
                     </div>
                 </div>
 
                 <div class="hidden lg:mt-24 lg:block">
-                    <p class="max-w-lg text-5xl leading-[1.1] font-extrabold">Everything you need for teaching, in one warm place.</p>
+                    <p class="max-w-lg text-5xl leading-[1.1] font-extrabold">Plan smarter. Teach with joy.</p>
                     <p class="mt-8 text-sm font-bold text-orange-200">{{ config('schoolhub.school_name') }}</p>
                 </div>
             </section>

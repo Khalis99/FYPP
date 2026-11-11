@@ -1,7 +1,7 @@
 <x-layouts.app title="Dashboard">
     <div class="mb-6">
         <h2 class="text-2xl font-extrabold text-slate-900 sm:text-3xl"><x-greeting :user="auth()->user()" />!</h2>
-        <p class="mt-1 text-[16px] text-slate-600">{{ now()->translatedFormat('l, j F Y') }} · Here is your teaching day at a glance.</p>
+        <p class="mt-1 text-[16px] text-slate-600">{{ now()->translatedFormat('l, j F Y') }}</p>
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

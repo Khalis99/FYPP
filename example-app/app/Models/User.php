@@ -16,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-#[Fillable(['name', 'email', 'password', 'role', 'phone', 'profile_photo_path', 'is_active', 'locale'])]
+#[Fillable(['name', 'email', 'password', 'role', 'phone', 'profile_photo_path', 'is_active', 'locale', 'staff_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -36,6 +36,24 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * The next free six-digit staff ID: teachers get the current year plus a running number
+     * (260005), administrators get a 9 plus a running number (900002).
+     */
+    public static function nextStaffId(UserRole $role): string
+    {
+        $prefix = $role === UserRole::Admin ? '9' : now()->format('y');
+
+        $highest = static::query()
+            ->where('role', $role->value)
+            ->where('staff_id', 'like', $prefix.'%')
+            ->max('staff_id');
+
+        $next = $highest ? (int) substr($highest, strlen($prefix)) + 1 : 1;
+
+        return $prefix.str_pad((string) $next, 6 - strlen($prefix), '0', STR_PAD_LEFT);
     }
 
     /**

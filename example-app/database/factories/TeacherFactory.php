@@ -24,7 +24,6 @@ class TeacherFactory extends Factory
     {
         return [
             'user_id' => User::factory()->state(['role' => UserRole::Teacher]),
-            'teacher_code' => fake()->unique()->numerify('TCH####'),
             'department' => fake()->randomElement(['Science & Mathematics', 'Languages', 'Humanities', 'Technical & Vocational']),
         ];
     }
