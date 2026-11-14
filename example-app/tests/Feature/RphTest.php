@@ -81,8 +81,34 @@ test('generating an RPH stores a draft in the session for review, not in the dat
 
 test('RPH generation validates the teacher input', function () {
     $this->actingAs($this->teacher->user)
-        ->post(route('teacher.rph.generate'), rphInput(['topic' => '', 'learning_objectives' => '', 'duration_minutes' => 5]))
-        ->assertSessionHasErrors(['topic', 'learning_objectives', 'duration_minutes']);
+        ->post(route('teacher.rph.generate'), rphInput(['topic' => '', 'duration_minutes' => 5]))
+        ->assertSessionHasErrors(['topic', 'duration_minutes']);
+});
+
+test('a teacher can generate an RPH from just the topic and the AI suggests the objectives', function () {
+    $this->actingAs($this->teacher->user)
+        ->post(route('teacher.rph.generate'), [
+            'language' => 'en',
+            'subject_id' => $this->subject->id,
+            'school_class_id' => $this->schoolClass->id,
+            'topic' => 'Photosynthesis',
+            'lesson_date' => '2026-10-12',
+            'duration_minutes' => 60,
+        ])
+        ->assertRedirect(route('teacher.rph.draft'));
+
+    $draft = session('rph_draft');
+
+    expect($draft['content']['learning_objectives'])->not->toBeEmpty()
+        ->and($draft['content']['learning_objectives'][0])->toContain('Photosynthesis');
+});
+
+test('the RPH form keeps the extra fields in an optional section', function () {
+    $this->actingAs($this->teacher->user)
+        ->get(route('teacher.rph.create'))
+        ->assertOk()
+        ->assertSee('What will you teach?')
+        ->assertSee('More options');
 });
 
 test('a teacher cannot generate an RPH for a class they do not teach', function () {
