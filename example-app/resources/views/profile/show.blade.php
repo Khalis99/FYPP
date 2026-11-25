@@ -15,15 +15,18 @@
                         <p class="text-2xl font-extrabold text-slate-900">{{ $user->name }}</p>
                         <p class="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-start">
                             <x-badge :color="$user->isAdmin() ? 'purple' : 'blue'">{{ $user->role->label() }}</x-badge>
-                            <span class="text-[15px] text-slate-600">Staff ID <span class="font-bold tracking-wider text-slate-900">{{ $user->staff_id }}</span></span>
                         </p>
                     </div>
                 </div>
 
                 <dl class="grid gap-x-8 gap-y-6 pt-6 sm:grid-cols-2">
                     <div>
-                        <dt class="text-sm text-slate-500">Email</dt>
-                        <dd class="text-[17px] break-all">{{ $user->email }}</dd>
+                        @if ($user->isAdmin())
+                            <dt class="text-sm text-slate-500">Staff ID</dt>
+                        @else
+                            <dt class="text-sm text-slate-500">Teacher ID</dt>
+                        @endif
+                        <dd class="text-[17px] tracking-wider">{{ $user->staff_id }}</dd>
                     </div>
                     <div>
                         <dt class="text-sm text-slate-500">Phone number</dt>

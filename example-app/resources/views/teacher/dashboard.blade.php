@@ -97,15 +97,6 @@
                 @endif
                 <a href="{{ route('teacher.timetable.index') }}" class="mt-4 inline-block text-[15px] link">View full timetable</a>
             </x-card>
-
-            <x-card title="Quick Actions">
-                <div class="grid gap-2">
-                    <a href="{{ route('teacher.rph.create') }}" class="btn btn-secondary justify-start"><x-icon name="sparkles" class="text-brand-600" /> Generate RPH</a>
-                    <a href="{{ route('teacher.materials.create') }}" class="btn btn-secondary justify-start"><x-icon name="upload" class="text-brand-600" /> Upload Material</a>
-                    <a href="{{ route('teacher.assignments.create') }}" class="btn btn-secondary justify-start"><x-icon name="plus" class="text-brand-600" /> Create Assignment</a>
-                    <a href="{{ route('teacher.classes.index') }}" class="btn btn-secondary justify-start"><x-icon name="classes" class="text-brand-600" /> View Classes</a>
-                </div>
-            </x-card>
         </div>
     </div>
 </x-layouts.app>
